@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYPE BEAST TYPE TEST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --hb-blue: #0033FF;
+            --hb-dark: #001A80;
+            --hb-light: #F2F2F2;
+            --white: #FFFFFF;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--hb-blue);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .impact {
+            font-family: 'Impact', 'Helvetica Bold', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 480px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 24px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Screen Styles */
+        .screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* Intro Screen */
+        .intro-header {
+            font-size: 14px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .intro-title {
+            font-size: 80px;
+            line-height: 0.9;
+            margin: 40px 0;
+        }
+
+        .intro-desc {
+            font-size: 18px;
+            margin-bottom: auto;
+        }
+
+        /* Question Screen */
+        .q-progress {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .q-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .q-bar-fill {
+            height: 100%;
+            background: var(--white);
+            transition: width 0.3s ease;
+        }
+
+        .q-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            word-break: keep-all;
+        }
+
+        .btn-option {
+            background: var(--white);
+            color: var(--hb-blue);
+            border: none;
+            padding: 20px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-option:active {
+            transform: scale(0.98);
+        }
+
+        /* Result Screen */
+        .result-type {
+            font-size: 64px;
+            margin-bottom: 10px;
+        }
+
+        .result-desc {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .result-card {
+            background: var(--white);
+            color: var(--hb-blue);
+            padding: 30px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .result-card::after {
+            content: '★';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 40px;
+            opacity: 0.2;
+        }
+
+        /* Stats */
+        .stats-container {
+            margin-top: auto;
+            padding: 20px;
+            background: var(--hb-dark);
+        }
+
+        .stat-row {
+            margin-bottom: 15px;
+        }
+
+        .stat-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .stat-bar-bg {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: var(--white);
+        }
+
+        /* Global Button */
+        .btn-main {
+            background: var(--white);
+            color: var(--hb-blue);
+            border: none;
+            padding: 24px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!-- Intro Screen -->
+    <div id="intro" class="screen active">
+        <div class="intro-header impact">HYPE BEAST : CONSUMPTION TEST</div>
+        <h1 class="intro-title impact">HYPE<br>BEAST</h1>
+        <p class="intro-desc">나의 소비 스타일을 선택하기</p>
+        <button class="btn-main impact" onclick="startTest()">START</button>
+    </div>
+
+    <!-- Question Screen -->
+    <div id="question" class="screen">
+        <div id="q-progress-text" class="q-progress impact">01 / 03</div>
+        <div class="q-bar"><div id="q-bar-fill" class="q-bar-fill" style="width: 33%"></div></div>
+        <h2 id="q-title" class="q-title">...</h2>
+        <div id="options" style="display: flex; flex-direction: column;"></div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result" class="screen">
+        <div class="impact" style="font-size: 14px; margin-bottom: 10px;">YOUR TYPE IS</div>
+        <h1 id="result-type" class="result-type impact">FAST</h1>
+        <div id="result-desc" class="result-desc">유행 반응형 소비자</div>
+        
+        <div class="result-card">
+            <p id="result-punchline" style="font-weight: 700; font-size: 18px; margin-bottom: 10px;"></p>
+            <p id="result-summary" style="font-size: 14px; line-height: 1.6; opacity: 0.8;"></p>
+        </div>
+
+        <div class="stats-container">
+            <div id="total-users" class="impact" style="margin-bottom: 15px; font-size: 14px;">TOTAL USERS: --</div>
+            <div id="stats-bars"></div>
+        </div>
+        
+        <p style="font-size: 12px; margin: 20px 0; opacity: 0.7; text-align: center;">ID 카드를 선택하고 전시 스탭에게 보여주세요.</p>
+        <button class="btn-main impact" onclick="location.reload()">RETAKE TEST</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            title: "한정판 제품이 출시됐다.",
+            options: [
+                { text: "바로 선점하는 게 좋다", type: "A" },
+                { text: "고민 후 선택한다", type: "B" },
+                { text: "반응을 보고 결정한다", type: "C" }
+            ]
+        },
+        {
+            title: "스타일을 선택할 때",
+            options: [
+                { text: "트렌드를 따른다", type: "A" },
+                { text: "나만의 기준을 믿는 편이다", type: "B" },
+                { text: "집단의 흐름을 따른다", type: "C" }
+            ]
+        },
+        {
+            title: "소비를 결정할 때",
+            options: [
+                { text: "빠른 반응이 중요하다", type: "A" },
+                { text: "기준과 취향이 중요하다", type: "B" },
+                { text: "소속과 관계가 중요하다", type: "C" }
+            ]
+        }
+    ];
+
+    const resultsData = {
+        A: { name: "FAST (MAX)", desc: "유행 반응형 소비자", punch: "“유행이 뜨면 이미 늦었다”", summary: "트렌드에 가장 민감하게 반응하며, 변화를 즐기는 타입입니다." },
+        B: { name: "OWN (HUGO)", desc: "자기 기준 중심형 소비자", punch: "“나만의 기준”", summary: "외부의 시선보다 본인의 확고한 취향과 기준을 우선시합니다." },
+        C: { name: "CREW (KRU)", desc: "집단 기반형 소비자", punch: "“우리는 함께 간다”", summary: "소속된 집단의 정체성과 유대감을 바탕으로 소비를 결정합니다." }
+    };
+
+    let currentStep = 0;
+    let answers = [];
+
+    // 실시간 집계 시뮬레이션 (LocalStorage 활용)
+    function updateStats(type) {
+        let stats = JSON.parse(localStorage.getItem('hb_stats')) || { A: 52, B: 34, C: 42, total: 128 };
+        stats[type]++;
+        stats.total++;
+        localStorage.setItem('hb_stats', JSON.stringify(stats));
+        return stats;
+    }
+
+    function startTest() {
+        document.getElementById('intro').classList.remove('active');
+        document.getElementById('question').classList.add('active');
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const q = questions[currentStep];
+        document.getElementById('q-progress-text').innerText = `0${currentStep + 1} / 03`;
+        document.getElementById('q-bar-fill').style.width = `${((currentStep + 1) / 3) * 100}%`;
+        document.getElementById('q-title').innerText = q.title;
+        
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-option';
+            btn.innerHTML = `<span>${opt.text}</span> <span class="impact" style="opacity:0.3">>></span>`;
+            btn.onclick = () => selectOption(opt.type);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function selectOption(type) {
+        answers.push(type);
+        if (currentStep < 2) {
+            currentStep++;
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        const counts = answers.reduce((acc, cur) => { acc[cur] = (acc[cur] || 0) + 1; return acc; }, {});
+        const resultType = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+        const data = resultsData[resultType];
+
+        document.getElementById('question').classList.remove('active');
+        document.getElementById('result').classList.add('active');
+
+        document.getElementById('result-type').innerText = data.name;
+        document.getElementById('result-desc').innerText = data.desc;
+        document.getElementById('result-punchline').innerText = data.punch;
+        document.getElementById('result-summary').innerText = data.summary;
+
+        const stats = updateStats(resultType);
+        document.getElementById('total-users').innerText = `TOTAL USERS: ${stats.total}`;
+        
+        const statsBars = document.getElementById('stats-bars');
+        statsBars.innerHTML = '';
+        ['A', 'B', 'C'].forEach(t => {
+            const perc = Math.round((stats[t] / stats.total) * 100);
+            const label = t === 'A' ? 'FAST' : t === 'B' ? 'OWN' : 'CREW';
+            statsBars.innerHTML += `
+                <div class="stat-row">
+                    <div class="stat-label impact"><span>${label}</span><span>${perc}%</span></div>
+                    <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: ${perc}%"></div></div>
+                </div>`;
+        });
+    }
+</script>
+</body>
+</html>

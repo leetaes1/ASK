@@ -18,23 +18,25 @@
         body { background-color: var(--window-bg); margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; }
         
         #main-container { 
-            width: 100vw; /* 가로폭 전체 사용 */
-            height: 100vh; background-color: var(--main-bg); 
+            width: 100vw; height: 100vh; background-color: var(--main-bg); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             padding: 20px; box-sizing: border-box; position: relative; overflow: hidden; 
         }
 
-        /* 배경 로고 logo2 (위치/비율 유지) */
         #main-container::before { 
             content: ""; position: absolute; top: 50%; right: -300px; transform: translateY(-50%); 
             width: 900px; height: 900px; background-image: url('logo2.png'); background-size: contain; 
             background-repeat: no-repeat; background-position: center; filter: brightness(0); opacity: 0.2; z-index: 0; pointer-events: none; 
         }
 
-        /* 콘텐츠 영역 다시 컴팩트하게 조정 */
-        .inner-content { width: 100%; max-width: 550px; position: relative; z-index: 10; }
+        .inner-content { width: 100%; max-width: 550px; position: relative; z-index: 10; height: 90vh; display: flex; flex-direction: column; justify-content: center; }
         .page { display: none; }
         .page.active { display: block; text-align: center; }
+
+        /* 결과 페이지는 스크롤이 필요할 수 있음 */
+        #page-result.active { overflow-y: auto; height: 100%; padding-right: 10px; }
+        #page-result::-webkit-scrollbar { width: 6px; }
+        #page-result::-webkit-scrollbar-thumb { background: var(--btn-dark-navy); border-radius: 10px; }
 
         .main-logo { width: 100%; max-width: 380px; height: auto; margin-bottom: 25px; filter: brightness(0); opacity: 1.0; }
         .sub-logo { width: 100%; height: auto; margin-bottom: 20px; filter: brightness(0); display: block; }
@@ -51,8 +53,7 @@
             padding: 20px; margin-bottom: 15px; font-size: 1.1rem; cursor: pointer; 
             display: flex; justify-content: space-between; align-items: center; z-index: 20; 
             overflow: hidden; font-family: 'Noto Sans KR', sans-serif; 
-            color: var(--text-black); font-weight: 900; 
-            border-radius: 6px; 
+            color: var(--text-black); font-weight: 900; border-radius: 6px; 
         }
         .opt-btn:disabled { cursor: default; opacity: 0.8; }
         .btn-fill { position: absolute; top: 0; left: 0; bottom: 0; width: 0%; background-color: var(--bar-bg); z-index: -1; transition: width 0.6s ease; }
@@ -63,14 +64,22 @@
 
         .result-category { font-weight: 900; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(0,0,0,0.7); display: block; }
         .result-name { font-weight: 900; font-size: 3.8rem; line-height: 1; margin: 5px 0; letter-spacing: -0.03em; }
-        .character-img { width: 220px; height: 220px; margin: 20px auto; background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; align-items: center; justify-content: center; font-size: 80px; }
-        #result-tag { font-weight: 900; font-size: 1.2rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; margin-top: 10px; padding-bottom: 5px; }
+        .character-img { width: 200px; height: 200px; margin: 15px auto; background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; align-items: center; justify-content: center; font-size: 70px; }
+        #result-tag { font-weight: 900; font-size: 1.1rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; margin-top: 5px; padding-bottom: 5px; }
 
-        .total-stats { margin-top: 30px; padding: 20px; background: rgb(220, 220, 220); border-radius: 10px; text-align: left; position: relative; z-index: 20; }
-        .stat-title { font-weight: 900; font-size: 0.95rem; margin-bottom: 12px; display: block; border-bottom: 2px solid #000; padding-bottom: 5px; }
+        .total-stats { margin: 30px 0; padding: 20px; background: rgb(220, 220, 220); border-radius: 10px; text-align: left; }
         .stat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.85rem; font-weight: 900; }
         .stat-bar-bg { flex-grow: 1; height: 8px; background: rgba(0,0,0,0.15); margin: 0 15px; }
         .stat-bar-fill { height: 100%; background: #000; width: 0%; transition: width 1s ease; }
+
+        /* [추가] 방명록 스타일 */
+        .guestbook-section { margin-top: 40px; text-align: left; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; border: 2px solid var(--text-black); }
+        .guestbook-title { font-weight: 900; font-size: 1.2rem; margin-bottom: 15px; display: block; }
+        .guestbook-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .guestbook-input { flex-grow: 1; padding: 12px; border: 2px solid var(--text-black); border-radius: 5px; font-family: inherit; font-weight: 700; outline: none; }
+        .guestbook-btn { background: var(--text-black); color: white; border: none; padding: 0 20px; border-radius: 5px; font-weight: 900; cursor: pointer; }
+        .guestbook-list { list-style: none; padding: 0; margin: 0; max-height: 200px; overflow-y: auto; }
+        .guestbook-item { background: white; padding: 10px 15px; border-radius: 5px; margin-bottom: 10px; font-weight: 700; font-size: 0.9rem; border-left: 5px solid var(--btn-dark-navy); color: #333; }
     </style>
 </head>
 <body>
@@ -140,19 +149,30 @@
                 <div id="result-tag"></div>
                 
                 <div class="total-stats">
-                    <span class="stat-title" id="total-count-text">현재 0명이 참여했습니다</span>
+                    <span style="font-weight:900; font-size:0.95rem; display:block; border-bottom:2px solid #000; padding-bottom:5px; margin-bottom:12px;" id="total-count-text">현재 0명이 참여했습니다</span>
                     <div class="stat-row"><span>MAX</span><div class="stat-bar-bg"><div id="bar-total-a" class="stat-bar-fill"></div></div><span id="percent-total-a">0%</span></div>
                     <div class="stat-row"><span>HUGO</span><div class="stat-bar-bg"><div id="bar-total-b" class="stat-bar-fill"></div></div><span id="percent-total-b">0%</span></div>
                     <div class="stat-row"><span>KRU</span><div class="stat-bar-bg"><div id="bar-total-c" class="stat-bar-fill"></div></div><span id="percent-total-c">0%</span></div>
                 </div>
-                <button class="main-btn" onclick="resetTest()">다시하기</button>
+
+                <div class="guestbook-section">
+                    <span class="guestbook-title">GUESTBOOK</span>
+                    <div class="guestbook-input-group">
+                        <input type="text" id="guest-msg" class="guestbook-input" placeholder="짧은 소감을 남겨주세요!" maxlength="50">
+                        <button class="guestbook-btn" onclick="sendGuestMsg()">남기기</button>
+                    </div>
+                    <ul id="guestbook-list" class="guestbook-list">
+                        </ul>
+                </div>
+
+                <button class="main-btn" style="margin-bottom: 50px;" onclick="resetTest()">다시하기</button>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, updateDoc, increment, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, updateDoc, increment, getDoc, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDdSXJJ2grh1GNA_vusNJRm9djRpRH1ggo",
@@ -181,14 +201,41 @@
             userAnswers = { a: 0, b: 0, c: 0 };
             answerHistory = [];
             isProcessing = false;
-            const allButtons = document.querySelectorAll('.opt-btn');
-            allButtons.forEach(btn => btn.disabled = false);
-            const allFills = document.querySelectorAll('.btn-fill');
-            allFills.forEach(fill => fill.style.width = "0%");
-            const allStatTexts = document.querySelectorAll('.stat-text');
-            allStatTexts.forEach(txt => txt.innerText = "");
+            document.querySelectorAll('.opt-btn').forEach(btn => btn.disabled = false);
+            document.querySelectorAll('.btn-fill').forEach(fill => fill.style.width = "0%");
+            document.querySelectorAll('.stat-text').forEach(txt => txt.innerText = "");
+            document.getElementById('guest-msg').value = "";
             nextPage('start');
         };
+
+        // [추가] 방명록 메시지 전송
+        window.sendGuestMsg = async function() {
+            const msgInput = document.getElementById('guest-msg');
+            const msg = msgInput.value.trim();
+            if(!msg) return;
+
+            try {
+                await addDoc(collection(db, "guestbook"), {
+                    message: msg,
+                    timestamp: serverTimestamp()
+                });
+                msgInput.value = "";
+            } catch (e) { console.error(e); }
+        };
+
+        // [추가] 방명록 실시간 리스너
+        const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"), limit(20));
+        onSnapshot(q, (snapshot) => {
+            const listEl = document.getElementById('guestbook-list');
+            listEl.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const li = document.createElement('li');
+                li.className = 'guestbook-item';
+                li.innerText = data.message;
+                listEl.appendChild(li);
+            });
+        });
 
         window.handleSelect = async function(qId, optId) {
             if (isProcessing) return;
@@ -219,11 +266,7 @@
                     else if (qId === 'q3') nextPage('q4');
                     else if (qId === 'q4') calculateResult();
                 }, 1000);
-            } catch (e) {
-                console.error(e);
-                isProcessing = false;
-                currentButtons.forEach(btn => btn.disabled = false);
-            }
+            } catch (e) { console.error(e); isProcessing = false; }
         };
 
         async function calculateResult() {
@@ -238,11 +281,12 @@
             if (a === maxVal) candidates.push('a');
             if (b === maxVal) candidates.push('b');
             if (c === maxVal) candidates.push('c');
-            if (candidates.length === 1) finalType = candidates[0];
-            else finalType = answerHistory.find(ans => candidates.includes(ans));
+            finalType = (candidates.length === 1) ? candidates[0] : answerHistory.find(ans => candidates.includes(ans));
+            
             if (finalType === 'a') { nameEl.innerText = "MAX"; imgEl.innerText = "🐺"; tagEl.innerText = "유행의 선점"; }
             else if (finalType === 'b') { nameEl.innerText = "HUGO"; imgEl.innerText = "🦍"; tagEl.innerText = "취향의 독립"; }
             else { nameEl.innerText = "KRU"; imgEl.innerText = "🐆"; tagEl.innerText = "공감과 소속"; }
+
             const q1Snap = await getDoc(doc(db, "surveyStats", "q1"));
             if (q1Snap.exists()) {
                 const d = q1Snap.data();

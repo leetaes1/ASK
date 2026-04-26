@@ -43,6 +43,8 @@
         .page.active { display: flex; text-align: center; }
 
         #page-result.active { overflow-y: auto; justify-content: center; padding: 20px 10px; }
+        
+        /* 방명록 페이지: 상하단 고정 및 중앙 스크롤 구조 */
         #page-guestbook.active { display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden; height: 100%; }
         
         .page::-webkit-scrollbar { width: 4px; }
@@ -50,26 +52,33 @@
 
         .result-wrapper { width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
 
-        /* [수정] 방명록 상단 고정 영역 - 높이를 auto로 변경하여 리스트와의 간격 최적화 */
+        /* [수정] 방명록 상단 영역 - 간격 더 좁힘 */
         .gb-fixed-header {
             width: 100%;
-            min-height: 45vh; /* 중앙 배치를 유지하면서도 너무 휑하지 않게 조정 */
+            min-height: 40vh; /* 조금 더 줄여서 댓글이 빨리 보이게 함 */
             display: flex;
             flex-direction: column;
             justify-content: center;
             flex-shrink: 0;
             z-index: 100;
-            padding-bottom: 10px; /* 버튼과 리스트 사이 최소 여백 */
         }
 
-        /* [수정] 방명록 하단 스크롤 영역 - 상단 마진 제거 */
+        /* [수정] 방명록 하단 고정 영역 (페이지네이션 전용) */
+        .gb-fixed-footer {
+            width: 100%;
+            flex-shrink: 0;
+            padding: 10px 0 20px 0;
+            z-index: 100;
+        }
+
+        /* [수정] 중앙 스크롤 댓글 영역 */
         .gb-scroll-area {
             flex-grow: 1;
             overflow-y: auto;
             width: 100%;
-            padding: 0px 5px 40px 5px;
+            padding: 0px 5px;
             box-sizing: border-box;
-            margin-top: 0; /* 마진 제거 */
+            margin-top: -10px; /* 상단 버튼과 더 밀착 */
         }
         .gb-scroll-area::-webkit-scrollbar { width: 4px; }
         .gb-scroll-area::-webkit-scrollbar-thumb { background: var(--text-black); border-radius: 10px; }
@@ -105,8 +114,8 @@
         .stat-bar-fill { height: 100%; background: #000; width: 0%; transition: width 1s ease; }
         .stat-percent { width: 45px; text-align: right; flex-shrink: 0; }
 
-        .gb-title { font-weight: 900; font-size: 2.2rem; margin-bottom: 25px; display: block; color: var(--text-black); text-align: left; padding-left: 5px; width: 100%; }
-        .gb-input-box { display: flex; gap: 10px; margin-bottom: 15px; width: 100%; }
+        .gb-title { font-weight: 900; font-size: 2.2rem; margin-bottom: 20px; display: block; color: var(--text-black); text-align: left; padding-left: 5px; width: 100%; }
+        .gb-input-box { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; }
         .gb-input { flex-grow: 1; padding: 15px; border: 3px solid var(--text-black); border-radius: 6px; font-family: inherit; font-weight: 900; font-size: 1rem; outline: none; background: rgba(255,255,255,0.1); color: var(--text-black); }
         .gb-input::placeholder { color: rgba(0,0,0,0.6); font-weight: 700; } 
         .gb-submit { background: var(--text-black); color: white; border: none; padding: 0 25px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 1rem; }
@@ -119,7 +128,7 @@
         .gb-msg { font-weight: 900; font-size: 1.05rem; color: var(--text-black); display: block; margin-bottom: 3px; word-break: break-all; }
         .gb-time { font-size: 0.75rem; color: rgba(0,0,0,0.5); font-weight: 700; }
 
-        .pagination { display: flex; justify-content: center; gap: 8px; margin: 20px 0 20px 0; width: 100%; }
+        .pagination { display: flex; justify-content: center; gap: 8px; margin: 0; width: 100%; }
         .pg-btn { width: 38px; height: 38px; border: 3px solid var(--text-black); background: transparent; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-family: inherit; }
         .pg-btn.active { background: var(--text-black); color: white; }
         .pg-btn:disabled { opacity: 0.3; cursor: default; }
@@ -142,7 +151,6 @@
                 <p style="font-weight: 900; font-size: 1.25rem; margin-bottom: 15px; color: var(--text-black);">나의 유행 소비 스타일 찾기</p>
                 <button class="main-btn" onclick="nextPage('q1')">시작하기</button>
             </div>
-
             <div id="page-q1" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 1 / 4</span><span>25%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 25%;"></div></div></div>
@@ -209,6 +217,9 @@
 
                 <div class="gb-scroll-area" id="gb-scroll-container">
                     <div id="gb-list-container" class="gb-list"></div>
+                </div>
+
+                <div class="gb-fixed-footer">
                     <div id="pagination" class="pagination"></div>
                 </div>
             </div>

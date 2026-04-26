@@ -33,7 +33,6 @@
         .page { display: none; }
         .page.active { display: block; text-align: center; }
 
-        /* 결과 및 방명록 페이지 스크롤 허용 */
         #page-result.active, #page-guestbook.active { overflow-y: auto; height: 100%; padding-right: 10px; }
         .page::-webkit-scrollbar { width: 6px; }
         .page::-webkit-scrollbar-thumb { background: var(--btn-dark-navy); border-radius: 10px; }
@@ -64,17 +63,16 @@
 
         .result-category { font-weight: 900; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(0,0,0,0.7); display: block; }
         .result-name { font-weight: 900; font-size: 3.8rem; line-height: 1; margin: 5px 0; letter-spacing: -0.03em; }
-        .character-img { width: 220px; height: 220px; margin: 20px auto; background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; align-items: center; justify-content: center; font-size: 80px; }
-        #result-tag { font-weight: 900; font-size: 1.2rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; margin-top: 10px; padding-bottom: 5px; }
+        .character-img { width: 200px; height: 200px; margin: 15px auto; background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; align-items: center; justify-content: center; font-size: 70px; }
+        #result-tag { font-weight: 900; font-size: 1.1rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; margin-top: 5px; padding-bottom: 5px; }
 
-        .total-stats { margin-top: 30px; padding: 20px; background: rgb(220, 220, 220); border-radius: 10px; text-align: left; }
+        .total-stats { margin: 30px 0; padding: 20px; background: rgb(220, 220, 220); border-radius: 10px; text-align: left; }
         .stat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.85rem; font-weight: 900; }
         .stat-bar-bg { flex-grow: 1; height: 8px; background: rgba(0,0,0,0.15); margin: 0 15px; }
         .stat-bar-fill { height: 100%; background: #000; width: 0%; transition: width 1s ease; }
 
-        /* 방명록 페이지 스타일 */
         .gb-title { font-weight: 900; font-size: 2.2rem; margin-bottom: 30px; display: block; color: var(--text-black); text-align: left; padding-left: 5px; }
-        .gb-input-box { display: flex; gap: 10px; margin-bottom: 30px; }
+        .gb-input-box { display: flex; gap: 10px; margin-bottom: 15px; } /* 마진 살짝 축소 */
         .gb-input { flex-grow: 1; padding: 15px; border: 3px solid var(--text-black); border-radius: 6px; font-family: inherit; font-weight: 700; font-size: 1rem; outline: none; background: rgba(255,255,255,0.9); }
         .gb-submit { background: var(--text-black); color: white; border: none; padding: 0 25px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 1rem; }
         .gb-list { list-style: none; padding: 0; margin: 0; text-align: left; }
@@ -104,6 +102,7 @@
                 <button class="opt-btn" onclick="handleSelect('q1', 'b')"><span>B. 혼자 고민을 깊게 한다</span><div class="btn-fill" id="bar-q1-b"></div><span class="stat-text" id="text-q1-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q1', 'c')"><span>C. 반응을 보고 결정한다</span><div class="btn-fill" id="bar-q1-c"></div><span class="stat-text" id="text-q1-c"></span></button>
             </div>
+
             <div id="page-q2" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container">
@@ -163,9 +162,11 @@
                     <input type="text" id="gb-input-field" class="gb-input" placeholder="짧은 인사를 남겨주세요." maxlength="60">
                     <button class="gb-submit" onclick="submitGuestbook()">전송</button>
                 </div>
-                <div id="gb-list-container" class="gb-list">
+                
+                <button class="main-btn" style="margin: 0 0 30px 0; background: #555; width: 100%; padding: 15px;" onclick="resetTest()">처음으로 (다시하기)</button>
+
+                <div id="gb-list-container" class="gb-list" style="margin-bottom: 30px;">
                     </div>
-                <button class="main-btn" style="margin: 40px 0; background: #555;" onclick="resetTest()">처음으로</button>
             </div>
         </div>
     </div>
@@ -190,6 +191,7 @@
         let userAnswers = { a: 0, b: 0, c: 0 };
         let answerHistory = [];
         let isProcessing = false;
+        let currentResultEmoji = ""; // [추가] 현재 사용자의 캐릭터 이모지를 저장할 변수
 
         window.nextPage = function(pId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -200,6 +202,7 @@
         window.resetTest = function() {
             userAnswers = { a: 0, b: 0, c: 0 };
             answerHistory = [];
+            currentResultEmoji = ""; // 이모지 초기화
             document.querySelectorAll('.opt-btn').forEach(btn => btn.disabled = false);
             document.querySelectorAll('.btn-fill').forEach(f => f.style.width = "0%");
             document.querySelectorAll('.stat-text').forEach(t => t.innerText = "");
@@ -207,21 +210,24 @@
             nextPage('start');
         };
 
-        // 방명록 제출
+        // 방명록 제출 (캐릭터 이모지 자동 등록 기능 추가)
         window.submitGuestbook = async function() {
             const input = document.getElementById('gb-input-field');
             const msg = input.value.trim();
             if(!msg) return;
+
+            // [기능 구현] 메시지 앞에 캐릭터 이모지를 강제로 붙임 (예: 🐺 안녕하세요)
+            const finalMsg = `${currentResultEmoji} ${msg}`;
+
             try {
                 await addDoc(collection(db, "guestbook"), {
-                    message: msg,
+                    message: finalMsg,
                     timestamp: serverTimestamp()
                 });
                 input.value = "";
             } catch(e) { console.error(e); }
         };
 
-        // 방명록 실시간 리스너 및 날짜 변환
         const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"), limit(30));
         onSnapshot(q, (snap) => {
             const container = document.getElementById('gb-list-container');
@@ -284,9 +290,16 @@
             const tagEl = document.getElementById('result-tag');
             const imgEl = document.getElementById('char-img');
 
-            if (finalType === 'a') { nameEl.innerText = "MAX"; imgEl.innerText = "🐺"; tagEl.innerText = "유행의 선점"; }
-            else if (finalType === 'b') { nameEl.innerText = "HUGO"; imgEl.innerText = "🦍"; tagEl.innerText = "취향의 독립"; }
-            else { nameEl.innerText = "KRU"; imgEl.innerText = "🐆"; tagEl.innerText = "공감과 소속"; }
+            if (finalType === 'a') { 
+                nameEl.innerText = "MAX"; imgEl.innerText = "🐺"; tagEl.innerText = "유행의 선점"; 
+                currentResultEmoji = "🐺"; // 늑대 이모지 저장
+            } else if (finalType === 'b') { 
+                nameEl.innerText = "HUGO"; imgEl.innerText = "🦍"; tagEl.innerText = "취향의 독립"; 
+                currentResultEmoji = "🦍"; // 고릴라 이모지 저장
+            } else { 
+                nameEl.innerText = "KRU"; imgEl.innerText = "🐆"; tagEl.innerText = "공감과 소속"; 
+                currentResultEmoji = "🐆"; // 표범 이모지 저장
+            }
 
             const q1Snap = await getDoc(doc(db, "surveyStats", "q1"));
             if (q1Snap.exists()) {

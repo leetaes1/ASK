@@ -66,15 +66,15 @@
         .card-img-wrap { width: 100%; max-width: 480px; margin: 20px auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); }
         .card-img { width: 100%; height: auto; border-radius: 12px; display: block; }
         
-        #result-tag { font-weight: 900; font-size: 1.1rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; margin-top: 5px; padding-bottom: 5px; }
+        /* [수정] 결과 태그 및 설명 스타일 */
+        #result-tag-container { margin-top: 5px; margin-bottom: 5px; }
+        #result-tag { font-weight: 900; font-size: 1.3rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; padding-bottom: 5px; margin-bottom: 8px; }
+        #result-desc { font-weight: 700; font-size: 0.95rem; color: var(--text-black); display: block; line-height: 1.4; opacity: 0.9; }
 
-        /* [수정] 통계 영역 레이아웃 정렬 */
         .total-stats { margin: 30px 0; padding: 20px; background: rgb(220, 220, 220); border-radius: 10px; text-align: left; }
         .stat-row { display: flex; align-items: center; margin-bottom: 12px; font-size: 0.9rem; font-weight: 900; }
-        
-        /* 이름 길이에 상관없이 고정폭 부여 */
         .stat-name { width: 60px; flex-shrink: 0; } 
-        .stat-bar-bg { flex-grow: 1; height: 10px; background: rgba(0,0,0,0.15); margin: 0 15px; border-radius: 5px; overflow: hidden; }
+        .stat-bar-bg { flex-grow: 1; height: 100%; background: rgba(0,0,0,0.15); margin: 0 15px; border-radius: 5px; overflow: hidden; height: 10px; }
         .stat-bar-fill { height: 100%; background: #000; width: 0%; transition: width 1s ease; }
         .stat-percent { width: 45px; text-align: right; flex-shrink: 0; }
 
@@ -90,6 +90,14 @@
         .gb-content-wrap { flex-grow: 1; }
         .gb-msg { font-weight: 900; font-size: 1.05rem; color: var(--text-black); display: block; margin-bottom: 3px; word-break: break-all; }
         .gb-time { font-size: 0.75rem; color: rgba(0,0,0,0.5); font-weight: 700; }
+
+        #custom-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: var(--main-bg); border: 4px solid var(--text-black); border-radius: 12px; padding: 30px; text-align: center; max-width: 350px; width: 80%; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .modal-text { font-weight: 900; font-size: 1.3rem; color: var(--text-black); margin-bottom: 25px; display: block; }
+        .modal-btn-group { display: flex; gap: 15px; justify-content: center; }
+        .modal-btn { padding: 12px 25px; border: 3px solid var(--text-black); border-radius: 6px; font-weight: 900; font-size: 1rem; cursor: pointer; flex: 1; }
+        .modal-btn.confirm { background: var(--text-black); color: white; }
+        .modal-btn.cancel { background: transparent; color: var(--text-black); }
     </style>
 </head>
 <body>
@@ -113,7 +121,6 @@
                 <button class="opt-btn" onclick="handleSelect('q1', 'b')"><span>B. 혼자 고민을 깊게 한다</span><div class="btn-fill" id="bar-q1-b"></div><span class="stat-text" id="text-q1-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q1', 'c')"><span>C. 반응을 보고 결정한다</span><div class="btn-fill" id="bar-q1-c"></div><span class="stat-text" id="text-q1-c"></span></button>
             </div>
-            
             <div id="page-q2" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container">
@@ -125,7 +132,6 @@
                 <button class="opt-btn" onclick="handleSelect('q2', 'b')"><span>B. 나만의 기준을 따른다</span><div class="btn-fill" id="bar-q2-b"></div><span class="stat-text" id="text-q2-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q2', 'c')"><span>C. 집단의 스타일을 따른다</span><div class="btn-fill" id="bar-q2-c"></div><span class="stat-text" id="text-q2-c"></span></button>
             </div>
-
             <div id="page-q3" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container">
@@ -137,7 +143,6 @@
                 <button class="opt-btn" onclick="handleSelect('q3', 'b')"><span>B. 취향과 기준</span><div class="btn-fill" id="bar-q3-b"></div><span class="stat-text" id="text-q3-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q3', 'c')"><span>C. 소속감과 관계</span><div class="btn-fill" id="bar-q3-c"></div><span class="stat-text" id="text-q3-c"></span></button>
             </div>
-
             <div id="page-q4" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container">
@@ -158,10 +163,13 @@
                 <div class="card-img-wrap">
                     <img src="" alt="ID Card" id="result-card" class="card-img">
                 </div>
-                <div id="result-tag"></div>
+                <div id="result-tag-container">
+                    <div id="result-tag">태그</div>
+                    <div id="result-desc">설명</div>
+                </div>
                 
                 <div class="total-stats">
-                    <span style="font-weight: 900; font-size: 1.1rem; display: block; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 15px;" id="total-count-text">참여 통계</span>
+                    <span style="font-weight: 900; font-size: 0.95rem; display: block; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 12px;" id="total-count-text">참여 통계</span>
                     <div class="stat-row"><span class="stat-name">MAX</span><div class="stat-bar-bg"><div id="bar-total-a" class="stat-bar-fill"></div></div><span id="percent-total-a" class="stat-percent">0%</span></div>
                     <div class="stat-row"><span class="stat-name">HUGO</span><div class="stat-bar-bg"><div id="bar-total-b" class="stat-bar-fill"></div></div><span id="percent-total-b" class="stat-percent">0%</span></div>
                     <div class="stat-row"><span class="stat-name">KRU</span><div class="stat-bar-bg"><div id="bar-total-c" class="stat-bar-fill"></div></div><span id="percent-total-c" class="stat-percent">0%</span></div>
@@ -173,10 +181,20 @@
                 <span class="gb-title">GUESTBOOK</span>
                 <div class="gb-input-box">
                     <input type="text" id="gb-input-field" class="gb-input" placeholder="짧은 인사를 남겨주세요." maxlength="60">
-                    <button class="gb-submit" onclick="submitGuestbook()">전송</button>
+                    <button class="gb-submit" onclick="showModal()">전송</button>
                 </div>
                 <button class="main-btn" style="margin: 0 0 30px 0; background: #555; width: 100%; padding: 15px; font-weight: 700;" onclick="resetTest()">처음으로 (다시하기)</button>
                 <div id="gb-list-container" class="gb-list" style="margin-bottom: 30px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-modal">
+        <div class="modal-content">
+            <span class="modal-text">방명록을<br>등록하시겠습니까?</span>
+            <div class="modal-btn-group">
+                <button class="modal-btn cancel" onclick="closeModal()">취소</button>
+                <button class="modal-btn confirm" onclick="confirmSubmit()">확인</button>
             </div>
         </div>
     </div>
@@ -220,11 +238,20 @@
             nextPage('start');
         };
 
-        window.submitGuestbook = async function() {
+        window.showModal = function() {
+            const msg = document.getElementById('gb-input-field').value.trim();
+            if(!msg) return;
+            document.getElementById('custom-modal').style.display = 'flex';
+        };
+
+        window.closeModal = function() {
+            document.getElementById('custom-modal').style.display = 'none';
+        };
+
+        window.confirmSubmit = async function() {
+            closeModal();
             const input = document.getElementById('gb-input-field');
             const msg = input.value.trim();
-            if(!msg) return;
-            if (!confirm("방명록을 등록하시겠습니까?")) return;
             try {
                 await addDoc(collection(db, "guestbook"), {
                     emoji: currentResultEmoji,
@@ -295,11 +322,29 @@
             
             const nameEl = document.getElementById('result-name');
             const tagEl = document.getElementById('result-tag');
+            const descEl = document.getElementById('result-desc');
             const cardEl = document.getElementById('result-card');
 
-            if (finalType === 'a') { nameEl.innerText = "MAX"; cardEl.src = "card1.png"; tagEl.innerText = "유행의 선점"; currentResultEmoji = "🐆"; }
-            else if (finalType === 'b') { nameEl.innerText = "HUGO"; cardEl.src = "card2.png"; tagEl.innerText = "취향의 독립"; currentResultEmoji = "🦍"; }
-            else { nameEl.innerText = "KRU"; cardEl.src = "card3.png"; tagEl.innerText = "공감과 소속"; currentResultEmoji = "🐺"; }
+            // [수정] 요청하신 결과별 제목 및 상세 설명 텍스트 적용
+            if (finalType === 'a') { 
+                nameEl.innerText = "MAX"; 
+                cardEl.src = "card1.png"; 
+                tagEl.innerText = "유행의 선점"; 
+                descEl.innerText = "누구보다 빠르게 트렌드를 선택하는 방식";
+                currentResultEmoji = "🐆"; 
+            } else if (finalType === 'b') { 
+                nameEl.innerText = "HUGO"; 
+                cardEl.src = "card2.png"; 
+                tagEl.innerText = "취향의 독립"; 
+                descEl.innerText = "자신만의 기준으로 소비를 결정하는 방식";
+                currentResultEmoji = "🦍"; 
+            } else { 
+                nameEl.innerText = "KRU"; 
+                cardEl.src = "card3.png"; 
+                tagEl.innerText = "공감과 소속"; 
+                descEl.innerText = "집단의 흐름 속에서 함께 선택하는 방식";
+                currentResultEmoji = "🐺"; 
+            }
 
             const q1Snap = await getDoc(doc(db, "surveyStats", "q1"));
             if (q1Snap.exists()) {

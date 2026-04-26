@@ -62,7 +62,11 @@
 
         .result-category { font-weight: 900; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(0,0,0,0.7); display: block; }
         .result-name { font-weight: 900; font-size: 3.8rem; line-height: 1; margin: 5px 0; letter-spacing: -0.03em; }
-        .character-img { width: 200px; height: 200px; margin: 15px auto; background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; align-items: center; justify-content: center; font-size: 70px; }
+        
+        /* [수정] 카드 이미지 스타일 */
+        .card-img-wrap { width: 100%; max-width: 480px; margin: 20px auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); }
+        .card-img { width: 100%; height: auto; border-radius: 12px; display: block; }
+        
         #result-tag { font-weight: 900; font-size: 1.1rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; margin-top: 5px; padding-bottom: 5px; }
 
         .total-stats { margin: 30px 0; padding: 20px; background: rgb(220, 220, 220); border-radius: 10px; text-align: left; }
@@ -70,43 +74,15 @@
         .stat-bar-bg { flex-grow: 1; height: 8px; background: rgba(0,0,0,0.15); margin: 0 15px; }
         .stat-bar-fill { height: 100%; background: #000; width: 0%; transition: width 1s ease; }
 
-        /* [수정] 방명록 섹션 스트로크 스타일로 변경 */
         .gb-title { font-weight: 900; font-size: 2.2rem; margin-bottom: 30px; display: block; color: var(--text-black); text-align: left; padding-left: 5px; }
         .gb-input-box { display: flex; gap: 10px; margin-bottom: 15px; }
         .gb-input { flex-grow: 1; padding: 15px; border: 3px solid var(--text-black); border-radius: 6px; font-family: inherit; font-weight: 700; font-size: 1rem; outline: none; background: rgba(255,255,255,0.1); color: var(--text-black); }
-        .gb-input::placeholder { color: rgba(0,0,0,0.4); }
         .gb-submit { background: var(--text-black); color: white; border: none; padding: 0 25px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 1rem; }
         
         .gb-list { list-style: none; padding: 0; margin: 0; text-align: left; }
-        
-        /* [수정] 방명록 아이템: 흰 배경 제거, 스트로크 추가 */
-        .gb-item { 
-            background: transparent; 
-            padding: 18px; 
-            border: 3px solid var(--text-black); 
-            border-radius: 6px; 
-            margin-bottom: 12px; 
-            display: flex; 
-            align-items: center;
-            position: relative;
-        }
-
-        /* [수정] 이모지 가독성 개선: 크기 확대 및 구분선 */
-        .gb-emoji { 
-            font-size: 1.6rem; 
-            margin-right: 12px; 
-            flex-shrink: 0; 
-            display: flex;
-            align-items: center;
-        }
-        .gb-divider {
-            width: 2px;
-            height: 20px;
-            background-color: var(--text-black);
-            margin-right: 15px;
-            opacity: 0.3;
-        }
-
+        .gb-item { background: transparent; padding: 18px; border: 3px solid var(--text-black); border-radius: 6px; margin-bottom: 12px; display: flex; align-items: center; }
+        .gb-emoji { font-size: 1.6rem; margin-right: 12px; flex-shrink: 0; display: flex; align-items: center; }
+        .gb-divider { width: 2px; height: 20px; background-color: var(--text-black); margin-right: 15px; opacity: 0.3; }
         .gb-content-wrap { flex-grow: 1; }
         .gb-msg { font-weight: 900; font-size: 1.05rem; color: var(--text-black); display: block; margin-bottom: 3px; word-break: break-all; }
         .gb-time { font-size: 0.75rem; color: rgba(0,0,0,0.5); font-weight: 700; }
@@ -118,7 +94,7 @@
         <div class="inner-content">
             <div id="page-start" class="page active">
                 <img src="logo.png" alt="Logo" class="main-logo">
-                <p class="start-p" style="font-weight: 900; font-size: 1.2rem; margin-bottom: 10px; color: var(--text-black);">나의 유행 소비 스타일 찾기</p>
+                <p style="font-weight: 900; font-size: 1.2rem; margin-bottom: 10px; color: var(--text-black);">나의 유행 소비 스타일 찾기</p>
                 <button class="main-btn" onclick="nextPage('q1')">시작하기</button>
             </div>
 
@@ -133,7 +109,7 @@
                 <button class="opt-btn" onclick="handleSelect('q1', 'b')"><span>B. 혼자 고민을 깊게 한다</span><div class="btn-fill" id="bar-q1-b"></div><span class="stat-text" id="text-q1-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q1', 'c')"><span>C. 반응을 보고 결정한다</span><div class="btn-fill" id="bar-q1-c"></div><span class="stat-text" id="text-q1-c"></span></button>
             </div>
-
+            
             <div id="page-q2" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container">
@@ -175,7 +151,9 @@
                     <span class="result-category">TYPE</span>
                     <h1 id="result-name" class="result-name">NAME</h1>
                 </div>
-                <div class="character-img" id="char-img"></div>
+                <div class="card-img-wrap">
+                    <img src="" alt="ID Card" id="result-card" class="card-img">
+                </div>
                 <div id="result-tag"></div>
                 
                 <div class="total-stats">
@@ -242,16 +220,12 @@
             const input = document.getElementById('gb-input-field');
             const msg = input.value.trim();
             if(!msg) return;
-
-            // [수정] DB에는 이모지와 구분자를 분리하기 쉽게 저장
-            const finalData = {
-                emoji: currentResultEmoji,
-                message: msg,
-                timestamp: serverTimestamp()
-            };
-
             try {
-                await addDoc(collection(db, "guestbook"), finalData);
+                await addDoc(collection(db, "guestbook"), {
+                    emoji: currentResultEmoji,
+                    message: msg,
+                    timestamp: serverTimestamp()
+                });
                 input.value = "";
             } catch(e) { console.error(e); }
         };
@@ -264,20 +238,14 @@
                 const data = doc.data();
                 const dateObj = data.timestamp ? data.timestamp.toDate() : new Date();
                 const timeStr = `${dateObj.getMonth()+1}/${dateObj.getDate()} ${dateObj.getHours()}:${String(dateObj.getMinutes()).padStart(2,'0')}`;
-                
-                // [수정] 이모지와 텍스트를 시각적으로 분리하는 구조로 생성
                 const item = document.createElement('div');
                 item.className = 'gb-item';
-                
-                // 이전 데이터(이모지 분리 안 된 경우) 호환성 처리
                 let emoji = data.emoji || "❓";
-                let message = data.message;
-                
                 item.innerHTML = `
                     <div class="gb-emoji">${emoji}</div>
                     <div class="gb-divider"></div>
                     <div class="gb-content-wrap">
-                        <span class="gb-msg">${message}</span>
+                        <span class="gb-msg">${data.message}</span>
                         <span class="gb-time">${timeStr}</span>
                     </div>
                 `;
@@ -329,16 +297,23 @@
             
             const nameEl = document.getElementById('result-name');
             const tagEl = document.getElementById('result-tag');
-            const imgEl = document.getElementById('char-img');
+            const cardEl = document.getElementById('result-card');
 
+            // [수정] 카드 매칭 로직
             if (finalType === 'a') { 
-                nameEl.innerText = "MAX"; imgEl.innerText = "🐆"; tagEl.innerText = "유행의 선점"; 
+                nameEl.innerText = "MAX"; 
+                cardEl.src = "card1.png"; 
+                tagEl.innerText = "유행의 선점"; 
                 currentResultEmoji = "🐆"; 
             } else if (finalType === 'b') { 
-                nameEl.innerText = "HUGO"; imgEl.innerText = "🦍"; tagEl.innerText = "취향의 독립"; 
+                nameEl.innerText = "HUGO"; 
+                cardEl.src = "card2.png"; 
+                tagEl.innerText = "취향의 독립"; 
                 currentResultEmoji = "🦍"; 
             } else { 
-                nameEl.innerText = "KRU"; imgEl.innerText = "🐺"; tagEl.innerText = "공감과 소속"; 
+                nameEl.innerText = "KRU"; 
+                cardEl.src = "card3.png"; 
+                tagEl.innerText = "공감과 소속"; 
                 currentResultEmoji = "🐺"; 
             }
 

@@ -10,7 +10,6 @@
     
     <style>
         :root {
-            /* [수정] 배경색을 #4453a4로 변경 */
             --main-bg: #4453a4; 
             --bar-bg: #526eb0; 
             --btn-dark-navy: #1B2450; 
@@ -26,14 +25,13 @@
             padding: 20px; box-sizing: border-box; position: relative; overflow: hidden; 
         }
 
-        /* [수정] 배경 로고 (logo2.png) 색상을 #43497b 톤으로 조정 */
+        /* [수정] logo2.png 투명도 제거 (opacity: 1.0) */
         #main-container::before { 
             content: ""; position: absolute; bottom: -150px; right: -200px; 
             width: 950px; height: 950px; background-image: url('logo2.png'); background-size: contain; 
             background-repeat: no-repeat; background-position: center; 
-            /* 지정해주신 색상 #43497b 느낌을 내기 위한 필터 적용 */
             filter: brightness(0) saturate(100%) invert(32%) sepia(16%) border-left(10%) hue-rotate(195deg) brightness(95%) contrast(85%);
-            opacity: 0.25; z-index: 0; pointer-events: none; 
+            opacity: 1.0; z-index: 0; pointer-events: none; 
             transform: rotate(12deg);
         }
 
@@ -42,7 +40,7 @@
             width: 950px; height: 950px; background-image: url('logo2.png'); background-size: contain; 
             background-repeat: no-repeat; background-position: center; 
             filter: brightness(0) saturate(100%) invert(32%) sepia(16%) border-left(10%) hue-rotate(195deg) brightness(95%) contrast(85%);
-            opacity: 0.25; z-index: 0; pointer-events: none; 
+            opacity: 1.0; z-index: 0; pointer-events: none; 
             transform: scaleX(-1) rotate(-12deg);
         }
 
@@ -56,6 +54,8 @@
         .page::-webkit-scrollbar { width: 4px; }
         .page::-webkit-scrollbar-thumb { background: var(--btn-dark-navy); border-radius: 10px; }
 
+        .result-wrapper { width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+
         .gb-fixed-header { width: 100%; height: 50vh; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; z-index: 100; margin-bottom: -50px; }
         .gb-scroll-area { flex-grow: 1; overflow-y: auto; width: 100%; padding: 0 5px; box-sizing: border-box; }
         .gb-scroll-area::-webkit-scrollbar { width: 4px; }
@@ -64,7 +64,6 @@
 
         .main-logo { width: 100%; max-width: 350px; height: auto; margin-bottom: 25px; filter: none; opacity: 1.0; }
         .sub-logo { width: 100%; height: auto; margin-bottom: 20px; filter: none; display: block; }
-        
         h2 { font-weight: 900; font-size: 1.6rem; text-align: left; margin-bottom: 30px; letter-spacing: -0.02em; padding: 0 10px; width: 100%; word-break: keep-all; }
         .progress-container { width: 100%; margin-bottom: 30px; }
         .progress-info { display: flex; justify-content: space-between; font-weight: 900; font-size: 0.9rem; margin-bottom: 8px; }
@@ -100,12 +99,15 @@
         
         .gb-list { list-style: none; padding: 0; margin: 0; text-align: left; width: 100%; }
         .gb-item { background: transparent; padding: 18px; border: 3px solid var(--text-black); border-radius: 6px; margin-bottom: 12px; display: flex; align-items: center; }
-        .gb-emoji { font-size: 1.6rem; margin-right: 12px; flex-shrink: 0; display: flex; align-items: center; }
+        
+        /* [수정] 방명록 좌측 캐릭터 이미지 스타일 */
+        .gb-head-wrap { width: 45px; height: 45px; margin-right: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .gb-head-img { width: 100%; height: auto; object-fit: contain; }
+        
         .gb-divider { width: 2px; height: 20px; background-color: var(--text-black); margin-right: 15px; opacity: 0.3; }
         .gb-content-wrap { flex-grow: 1; }
         .gb-msg { font-weight: 900; font-size: 1.05rem; color: var(--text-black); display: block; margin-bottom: 3px; word-break: break-all; }
         .gb-time { font-size: 0.75rem; color: rgba(0,0,0,0.5); font-weight: 700; }
-
         .pagination { display: flex; justify-content: center; gap: 8px; margin: 0; width: 100%; }
         .pg-btn { width: 38px; height: 38px; border: 3px solid var(--text-black); background: transparent; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-family: inherit; }
         .pg-btn.active { background: var(--text-black); color: white; }
@@ -130,7 +132,7 @@
                 <button class="main-btn" onclick="nextPage('q1')">시작하기</button>
             </div>
 
-            <!-- Q1 ~ Q4 -->
+            <!-- Q1 ~ Q4 동일 -->
             <div id="page-q1" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 1 / 4</span><span>25%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 25%;"></div></div></div>
@@ -139,7 +141,6 @@
                 <button class="opt-btn" onclick="handleSelect('q1', 'b')"><span>B. 바로 선점하는 게 좋다</span><div class="btn-fill" id="bar-q1-b"></div><span class="stat-text" id="text-q1-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q1', 'c')"><span>C. 혼자 고민을 깊게 한다</span><div class="btn-fill" id="bar-q1-c"></div><span class="stat-text" id="text-q1-c"></span></button>
             </div>
-
             <div id="page-q2" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 2 / 4</span><span>50%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 50%;"></div></div></div>
@@ -148,7 +149,6 @@
                 <button class="opt-btn" onclick="handleSelect('q2', 'b')"><span>B. 뜨자마자 바로 먹어본다</span><div class="btn-fill" id="bar-q2-b"></div><span class="stat-text" id="text-q2-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q2', 'c')"><span>C. 유행이든 아니든, 내가 끌려야 먹는다</span><div class="btn-fill" id="bar-q2-c"></div><span class="stat-text" id="text-q2-c"></span></button>
             </div>
-
             <div id="page-q3" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 3 / 4</span><span>75%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 75%;"></div></div></div>
@@ -157,7 +157,6 @@
                 <button class="opt-btn" onclick="handleSelect('q3', 'b')"><span>B. 좋아하는 아티스트의 신곡이 나오는대로 들어본다</span><div class="btn-fill" id="bar-q3-b"></div><span class="stat-text" id="text-q3-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q3', 'c')"><span>C. 취향껏 디깅해서 듣는다</span><div class="btn-fill" id="bar-q3-c"></div><span class="stat-text" id="text-q3-c"></span></button>
             </div>
-
             <div id="page-q4" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 4 / 4</span><span>100%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 100%;"></div></div></div>
@@ -167,6 +166,7 @@
                 <button class="opt-btn" onclick="handleSelect('q4', 'c')"><span>C. 취향과 기준</span><div class="btn-fill" id="bar-q4-c"></div><span class="stat-text" id="text-q4-c"></span></button>
             </div>
 
+            <!-- 결과 페이지 -->
             <div id="page-result" class="page">
                 <div class="result-wrapper">
                     <div class="result-header">
@@ -239,7 +239,7 @@
         let userAnswers = { a: 0, b: 0, c: 0 };
         let answerHistory = [];
         let isProcessing = false;
-        let currentResultEmoji = ""; 
+        let currentResultHead = ""; // 이모지 대신 파일명을 저장할 변수
         let allGuestMessages = [];
         let currentPage = 1;
         const itemsPerPage = 15;
@@ -254,7 +254,7 @@
         window.resetTest = function() {
             userAnswers = { a: 0, b: 0, c: 0 };
             answerHistory = [];
-            currentResultEmoji = ""; 
+            currentResultHead = ""; 
             document.querySelectorAll('.opt-btn').forEach(btn => btn.disabled = false);
             document.querySelectorAll('.btn-fill').forEach(f => f.style.width = "0%");
             document.querySelectorAll('.stat-text').forEach(t => t.innerText = "");
@@ -277,7 +277,7 @@
             const msg = input.value.trim();
             try {
                 await addDoc(collection(db, "guestbook"), {
-                    emoji: currentResultEmoji,
+                    headImg: currentResultHead, // [수정] 파일명 저장
                     message: msg,
                     timestamp: serverTimestamp()
                 });
@@ -306,8 +306,16 @@
                 const timeStr = `${dateObj.getMonth()+1}/${dateObj.getDate()} ${dateObj.getHours()}:${String(dateObj.getMinutes()).padStart(2,'0')}`;
                 const item = document.createElement('div');
                 item.className = 'gb-item';
-                let emoji = data.emoji || "❓";
-                item.innerHTML = `<div class="gb-emoji">${emoji}</div><div class="gb-divider"></div><div class="gb-content-wrap"><span class="gb-msg">${data.message}</span><span class="gb-time">${timeStr}</span></div>`;
+                
+                // [수정] 이모지 대신 head png 이미지 출력
+                let headImg = data.headImg || "head1.png"; 
+                item.innerHTML = `
+                    <div class="gb-head-wrap"><img src="${headImg}" class="gb-head-img"></div>
+                    <div class="gb-divider"></div>
+                    <div class="gb-content-wrap">
+                        <span class="gb-msg">${data.message}</span>
+                        <span class="gb-time">${timeStr}</span>
+                    </div>`;
                 container.appendChild(item);
             });
 
@@ -382,16 +390,16 @@
             const descEl = document.getElementById('result-desc');
             const cardEl = document.getElementById('result-card');
 
-            // KRU(늑대 🐺), MAX(치타 🐆), HUGO(고릴라 🦍)
+            // [수정] head 이미지 매칭: head1(KRU), head2(MAX), head3(HUGO)
             if (finalType === 'a') { 
                 nameEl.innerText = "KRU"; cardEl.src = "card1.png"; tagEl.innerText = "공감과 소속"; 
-                descEl.innerText = "집단의 흐름 속에서 함께 선택하는 방식"; currentResultEmoji = "🐺"; 
+                descEl.innerText = "집단의 흐름 속에서 함께 선택하는 방식"; currentResultHead = "head1.png"; 
             } else if (finalType === 'b') { 
                 nameEl.innerText = "MAX"; cardEl.src = "card2.png"; tagEl.innerText = "유행의 선점"; 
-                descEl.innerText = "누구보다 빠르게 트렌드를 선택하는 방식"; currentResultEmoji = "🐆"; 
+                descEl.innerText = "누구보다 빠르게 트렌드를 선택하는 방식"; currentResultHead = "head2.png"; 
             } else { 
                 nameEl.innerText = "HUGO"; cardEl.src = "card3.png"; tagEl.innerText = "취향의 독립"; 
-                descEl.innerText = "자신만의 기준으로 소비를 결정하는 방식"; currentResultEmoji = "🦍"; 
+                descEl.innerText = "자신만의 기준으로 소비를 결정하는 방식"; currentResultHead = "head3.png"; 
             }
 
             const q1Snap = await getDoc(doc(db, "surveyStats", "q1"));

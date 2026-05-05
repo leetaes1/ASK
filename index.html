@@ -10,22 +10,14 @@
     
     <style>
         :root {
-            /* --- 배경 및 공통 컬러 --- */
             --main-bg: #4453a4; 
+            --bar-gauge: #5466b5; 
+            --progress-fill: #232948;
+            --progress-bg: #43497b;
+            --btn-bg-main: #232948;
+            --btn-text-main: #5666af;
             --window-bg: #000000; 
             --text-black: #000000; 
-
-            /* --- 요청하신 수정 컬러 변수 --- */
-            /* 1. 질문 선택 비율 바 컬러 */
-            --bar-gauge: #5466b5; 
-            /* 2. 진행도 바 채워진 영역 컬러 */
-            --progress-fill: #232948;
-            /* 3. 남은 진행도 영역 컬러 */
-            --progress-bg: #43497b;
-            /* 4. 주요 버튼 배경 컬러 */
-            --btn-bg-main: #232948;
-            /* 5. 버튼 내부 글씨 컬러 */
-            --btn-text-main: #5666af;
         }
 
         body { background-color: var(--window-bg); margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; }
@@ -62,7 +54,6 @@
         #page-guestbook.active { display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden; height: 100%; }
         
         .page::-webkit-scrollbar { width: 4px; }
-        /* 스크롤바 썸 컬러 수정 */
         .page::-webkit-scrollbar-thumb { background: var(--btn-bg-main); border-radius: 10px; }
 
         .result-wrapper { width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
@@ -79,18 +70,13 @@
         h2 { font-weight: 900; font-size: 1.6rem; text-align: left; margin-bottom: 30px; letter-spacing: -0.02em; padding: 0 10px; width: 100%; word-break: keep-all; }
         .progress-container { width: 100%; margin-bottom: 30px; }
         .progress-info { display: flex; justify-content: space-between; font-weight: 900; font-size: 0.9rem; margin-bottom: 8px; }
-        /* [수정] 남은 진행도 영역 컬러 */
         .main-progress-bg { width: 100%; height: 12px; background-color: var(--progress-bg); border-radius: 6px; overflow: hidden; }
-        /* [수정] 진행도 바 채워진 영역 컬러 */
         .main-progress-fill { height: 100%; background-color: var(--progress-fill); transition: width 0.5s ease; }
 
         .opt-btn { width: 100%; position: relative; background: transparent; border: 3px solid var(--text-black); padding: 18px; margin-bottom: 12px; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; z-index: 20; overflow: hidden; font-family: 'Noto Sans KR', sans-serif; color: var(--text-black); font-weight: 900; border-radius: 6px; text-align: left; }
         .opt-btn:disabled { cursor: default; opacity: 0.8; }
-        /* [수정] 질문 선택 비율 바 컬러 */
         .btn-fill { position: absolute; top: 0; left: 0; bottom: 0; width: 0%; background-color: var(--bar-gauge); z-index: -1; transition: width 0.6s ease; }
         .stat-text { font-weight: 900; font-size: 1rem; pointer-events: none; margin-left: 10px; flex-shrink: 0; }
-        
-        /* [수정] 시작하기 버튼 컬러 및 글씨 컬러 */
         .main-btn { margin-top: 25px; padding: 15px 45px; background: var(--btn-bg-main); color: var(--btn-text-main); border: none; font-size: 1.2rem; font-weight: 700; cursor: pointer; letter-spacing: 0.1em; border-radius: 6px; }
 
         .result-category { font-weight: 900; font-size: 0.9rem; letter-spacing: 0.25em; color: rgba(0,0,0,0.7); display: block; margin-bottom: 1px; }
@@ -101,19 +87,19 @@
         #result-tag { font-weight: 900; font-size: 1.35rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; padding-bottom: 5px; margin-bottom: 8px; }
         #result-desc { font-weight: 700; font-size: 0.95rem; color: var(--text-black); display: block; line-height: 1.4; opacity: 0.9; }
 
-        .total-stats { margin: 15px 0 10px 0; padding: 18px; background: rgb(220, 220, 220); border-radius: 10px; text-align: left; width: 100%; box-sizing: border-box; }
+        /* [수정] 결과 페이지 하단 참여 비율 바 컬러 수정 (#232948) */
+        .total-stats { margin: 15px 0 10px 0; padding: 18px; background: rgba(0,0,0,0.05); border-radius: 10px; text-align: left; width: 100%; box-sizing: border-box; }
         .stat-header { font-weight: 900; font-size: 1.1rem; display: block; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px; }
         .stat-row { display: flex; align-items: center; margin-bottom: 10px; font-size: 0.9rem; font-weight: 900; }
         .stat-name { width: 60px; flex-shrink: 0; } 
-        .stat-bar-bg { flex-grow: 1; height: 9px; background: rgba(0,0,0,0.15); margin: 0 12px; border-radius: 5px; overflow: hidden; }
-        .stat-bar-fill { height: 100%; background: #000; width: 0%; transition: width 1s ease; }
+        .stat-bar-bg { flex-grow: 1; height: 9px; background: rgba(0,0,0,0.1); margin: 0 12px; border-radius: 5px; overflow: hidden; }
+        .stat-bar-fill { height: 100%; background: #232948; width: 0%; transition: width 1s ease; }
         .stat-percent { width: 45px; text-align: right; flex-shrink: 0; }
 
         .gb-title { font-weight: 900; font-size: 2.2rem; margin-bottom: 20px; display: block; color: var(--text-black); text-align: left; padding-left: 5px; width: 100%; }
         .gb-input-box { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; }
         .gb-input { flex-grow: 1; padding: 15px; border: 3px solid var(--text-black); border-radius: 6px; font-family: inherit; font-weight: 900; font-size: 1rem; outline: none; background: rgba(255,255,255,0.1); color: var(--text-black); }
         .gb-input::placeholder { color: rgba(0,0,0,0.6); font-weight: 700; } 
-        /* [수정] 전송 버튼 컬러 및 글씨 컬러 */
         .gb-submit { background: var(--btn-bg-main); color: var(--btn-text-main); border: none; padding: 0 25px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 1rem; }
         
         .gb-list { list-style: none; padding: 0; margin: 0; text-align: left; width: 100%; }
@@ -124,10 +110,11 @@
         .gb-content-wrap { flex-grow: 1; }
         .gb-msg { font-weight: 900; font-size: 1.05rem; color: var(--text-black); display: block; margin-bottom: 3px; word-break: break-all; }
         .gb-time { font-size: 0.75rem; color: rgba(0,0,0,0.5); font-weight: 700; }
+        
+        /* [수정] 방명록 하단 페이지네이션 컬러 수정 (#232948) */
         .pagination { display: flex; justify-content: center; gap: 8px; margin: 0; width: 100%; }
-        .pg-btn { width: 38px; height: 38px; border: 3px solid var(--text-black); background: transparent; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-family: inherit; }
-        /* 페이지네이션 액티브 상태 컬러 수정 */
-        .pg-btn.active { background: var(--text-black); color: var(--main-bg); }
+        .pg-btn { width: 38px; height: 38px; border: 3px solid #232948; background: transparent; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-family: inherit; color: #232948; }
+        .pg-btn.active { background: #232948; color: var(--btn-text-main); }
         .pg-btn:disabled { opacity: 0.3; cursor: default; }
 
         #custom-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
@@ -135,7 +122,6 @@
         .modal-text { font-weight: 900; font-size: 1.3rem; color: var(--text-black); margin-bottom: 25px; display: block; line-height: 1.4; }
         .modal-btn-group { display: flex; gap: 12px; justify-content: center; }
         .modal-btn { padding: 12px 20px; border: 3px solid var(--text-black); border-radius: 6px; font-weight: 900; font-size: 1rem; cursor: pointer; flex: 1; }
-        /* 모달 확인 버튼 컬러 수정 */
         .modal-btn.confirm { background: var(--btn-bg-main); color: var(--btn-text-main); }
         .modal-btn.cancel { background: transparent; color: var(--text-black); }
     </style>
@@ -150,6 +136,7 @@
                 <button class="main-btn" onclick="nextPage('q1')">시작하기</button>
             </div>
 
+            <!-- 질문 페이지들 -->
             <div id="page-q1" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 1 / 4</span><span>25%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 25%;"></div></div></div>
@@ -158,7 +145,6 @@
                 <button class="opt-btn" onclick="handleSelect('q1', 'b')"><span>B. 바로 선점하는 게 좋다</span><div class="btn-fill" id="bar-q1-b"></div><span class="stat-text" id="text-q1-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q1', 'c')"><span>C. 혼자 고민을 깊게 한다</span><div class="btn-fill" id="bar-q1-c"></div><span class="stat-text" id="text-q1-c"></span></button>
             </div>
-
             <div id="page-q2" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 2 / 4</span><span>50%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 50%;"></div></div></div>
@@ -167,7 +153,6 @@
                 <button class="opt-btn" onclick="handleSelect('q2', 'b')"><span>B. 뜨자마자 바로 먹어본다</span><div class="btn-fill" id="bar-q2-b"></div><span class="stat-text" id="text-q2-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q2', 'c')"><span>C. 유행이든 아니든, 내가 끌려야 먹는다</span><div class="btn-fill" id="bar-q2-c"></div><span class="stat-text" id="text-q2-c"></span></button>
             </div>
-
             <div id="page-q3" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 3 / 4</span><span>75%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 75%;"></div></div></div>
@@ -176,7 +161,6 @@
                 <button class="opt-btn" onclick="handleSelect('q3', 'b')"><span>B. 좋아하는 아티스트의 신곡이 나오는대로 들어본다</span><div class="btn-fill" id="bar-q3-b"></div><span class="stat-text" id="text-q3-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q3', 'c')"><span>C. 취향껏 디깅해서 듣는다</span><div class="btn-fill" id="bar-q3-c"></div><span class="stat-text" id="text-q3-c"></span></button>
             </div>
-
             <div id="page-q4" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 4 / 4</span><span>100%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 100%;"></div></div></div>
@@ -186,6 +170,7 @@
                 <button class="opt-btn" onclick="handleSelect('q4', 'c')"><span>C. 취향과 기준</span><div class="btn-fill" id="bar-q4-c"></div><span class="stat-text" id="text-q4-c"></span></button>
             </div>
 
+            <!-- 결과 페이지 -->
             <div id="page-result" class="page">
                 <div class="result-wrapper">
                     <div class="result-header">
@@ -207,6 +192,7 @@
                 </div>
             </div>
 
+            <!-- 방명록 페이지 -->
             <div id="page-guestbook" class="page">
                 <div class="gb-fixed-header">
                     <span class="gb-title">GUESTBOOK</span>
@@ -214,7 +200,6 @@
                         <input type="text" id="gb-input-field" class="gb-input" placeholder="방명록을 남겨주세요." maxlength="60">
                         <button class="gb-submit" onclick="showModal()">전송</button>
                     </div>
-                    <!-- 처음으로 버튼 컬러 수정 적용됨 -->
                     <button class="main-btn" style="margin: 0; width: 100%; padding: 15px; font-weight: 700;" onclick="resetTest()">처음으로 (다시하기)</button>
                 </div>
                 <div class="gb-scroll-area" id="gb-scroll-container">
@@ -227,6 +212,7 @@
         </div>
     </div>
 
+    <!-- 모달 -->
     <div id="custom-modal">
         <div class="modal-content">
             <span class="modal-text">방명록을<br>등록하시겠습니까?</span>
@@ -324,7 +310,6 @@
                 const timeStr = `${dateObj.getMonth()+1}/${dateObj.getDate()} ${dateObj.getHours()}:${String(dateObj.getMinutes()).padStart(2,'0')}`;
                 const item = document.createElement('div');
                 item.className = 'gb-item';
-                
                 let headImg = data.headImg || "head1.png"; 
                 item.innerHTML = `
                     <div class="gb-head-wrap"><img src="${headImg}" class="gb-head-img"></div>
@@ -397,7 +382,6 @@
             if (a === maxVal) candidates.push('a');
             if (b === maxVal) candidates.push('b');
             if (c === maxVal) candidates.push('c');
-            
             let finalType = (candidates.length === 1) 
                 ? candidates[0] 
                 : answerHistory.slice().reverse().find(ans => candidates.includes(ans));

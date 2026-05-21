@@ -6,178 +6,202 @@
     <title>HYPE BEAST TYPE TEST</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2 family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --main-bg: #4453a4; 
-            --bar-gauge: #232948; 
-            --progress-fill: #232948;
-            --progress-bg: rgba(35, 41, 72, 0.2);
-            --btn-bg-main: #232948;
-            --btn-text-main: #ffffff;
+            /* 토스 스타일 쨍하고 세련된 블루 & 미니멀 테마 */
+            --main-bg: #3182f6; 
+            --bar-gauge: #e8f3ff; 
+            --progress-fill: #ffffff;
+            --progress-bg: rgba(255, 255, 255, 0.3);
+            --btn-bg-main: #ffffff;
+            --btn-text-main: #3182f6;
+            --card-bg: #ffffff;
             --window-bg: #000000; 
-            --text-black: #000000; 
+            --text-dark: #191f28;
+            --text-muted: #8b95a1;
         }
 
         /* --- 애니메이션 Keyframes --- */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        body { background-color: var(--window-bg); margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; }
+        body { 
+            background-color: var(--window-bg); margin: 0; padding: 0; 
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; overflow: hidden; font-family: 'Noto Sans KR', sans-serif; 
+            -webkit-font-smoothing: antialiased; 
+        }
         
         #main-container { 
             width: 100vw; height: 100vh; background-color: var(--main-bg); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            padding: 20px; position: relative; overflow: hidden; 
+            padding: 24px; position: relative; overflow: hidden; 
         }
 
+        /* 백그라운드 로고 은은하고 세련된 레이어 처리 */
         #main-container::before { 
-            content: ""; position: absolute; bottom: -150px; right: -200px; 
-            width: 950px; height: 950px; background-image: url('logo2.png'); background-size: contain; 
+            content: ""; position: absolute; bottom: -100px; right: -150px; 
+            width: 900px; height: 900px; background-image: url('logo2.png'); background-size: contain; 
             background-repeat: no-repeat; background-position: center; 
-            filter: brightness(0) saturate(100%) invert(32%) sepia(16%) border-left(10%) hue-rotate(195deg) brightness(95%) contrast(85%);
-            opacity: 0.6; z-index: 0; pointer-events: none; 
+            filter: brightness(0) invert(1); opacity: 0.08; z-index: 0; pointer-events: none; 
             transform: rotate(12deg);
         }
 
         #main-container::after { 
-            content: ""; position: absolute; top: -150px; left: -200px; 
-            width: 950px; height: 950px; background-image: url('logo2.png'); background-size: contain; 
+            content: ""; position: absolute; top: -100px; left: -150px; 
+            width: 900px; height: 900px; background-image: url('logo2.png'); background-size: contain; 
             background-repeat: no-repeat; background-position: center; 
-            filter: brightness(0) saturate(100%) invert(32%) sepia(16%) border-left(10%) hue-rotate(195deg) brightness(95%) contrast(85%);
-            opacity: 0.6; z-index: 0; pointer-events: none; 
+            filter: brightness(0) invert(1); opacity: 0.08; z-index: 0; pointer-events: none; 
             transform: scaleX(-1) rotate(-12deg);
         }
 
-        /* 구조적 크기와 정렬 규격 엄격하게 유지 */
-        .inner-content { width: 100%; max-width: 550px; position: relative; z-index: 10; height: 95vh; display: flex; flex-direction: column; }
+        .inner-content { 
+            width: 100%; max-width: 480px; position: relative; z-index: 10; 
+            height: 94vh; display: flex; flex-direction: column; 
+        }
+        
         .page { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; }
-        .page.active { display: flex; text-align: center; animation: fadeIn 0.5s ease-out forwards; }
+        .page.active { display: flex; text-align: center; animation: fadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 
-        /* Q파일 상단 프로그레스 바 스트릿 무드로 정돈 */
-        .progress-container { width: 100%; margin-bottom: 30px; }
-        .progress-info { display: flex; justify-content: space-between; font-weight: 900; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-black); letter-spacing: 0.05em; }
-        .main-progress-bg { width: 100%; height: 8px; background-color: var(--progress-bg); border-radius: 4px; overflow: hidden; }
-        .main-progress-fill { height: 100%; background-color: var(--progress-fill); transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+        /* 시작 메인 페이지 카드 스타일화 */
+        #page-start .main-logo { width: 100%; max-width: 320px; height: auto; margin-bottom: 24px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1)); }
+        #page-start p { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.02em; margin-bottom: 32px; color: #ffffff; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
-        h2 { font-weight: 900; font-size: 1.6rem; text-align: left; margin: 0 0 30px 0; letter-spacing: -0.03em; padding: 0 10px; width: 100%; color: var(--text-black); line-height: 1.4; word-break: keep-all; }
+        /* 상단 슬림 프로그레스 바 */
+        .progress-container { width: 100%; margin-bottom: 36px; }
+        .progress-info { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; color: rgba(255,255,255,0.9); letter-spacing: 0.02em; }
+        .main-progress-bg { width: 100%; height: 6px; background-color: var(--progress-bg); border-radius: 10px; overflow: hidden; }
+        .main-progress-fill { height: 100%; background-color: var(--progress-fill); border-radius: 10px; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-        /* 선택 버튼 매거진 포스터 레이아웃 디벨롭 */
+        /* 토스 레이아웃: 왼쪽 정렬 볼드 타이틀 */
+        h2 { font-weight: 700; font-size: 1.7rem; text-align: left; margin: 0 0 32px 0; letter-spacing: -0.03em; padding: 0 4px; width: 100%; color: #ffffff; line-height: 1.4; word-break: keep-all; }
+
+        /* 말랑한 앱 카드 형태의 선택지 버튼 고도화 */
         .opt-btn { 
-            width: 100%; position: relative; background: #ffffff; border: 3px solid var(--text-black); 
-            padding: 20px; margin-bottom: 14px; font-size: 1.1rem; cursor: pointer; 
+            width: 100%; position: relative; background: var(--card-bg); border: none; 
+            padding: 20px 24px; margin-bottom: 14px; font-size: 1.05rem; cursor: pointer; 
             display: flex; justify-content: space-between; align-items: center; z-index: 20; 
-            overflow: hidden; font-family: 'Noto Sans KR', sans-serif; color: var(--text-black); 
-            font-weight: 700; border-radius: 4px; text-align: left; 
-            box-shadow: 4px 4px 0px var(--text-black); transition: all 0.1s ease; 
+            overflow: hidden; font-family: 'Noto Sans KR', sans-serif; color: var(--text-dark); 
+            font-weight: 500; border-radius: 20px; text-align: left; 
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s; 
         }
-        .opt-btn span { position: relative; z-index: 2; line-height: 1.3; }
-        .opt-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--text-black); }
-        .opt-btn:disabled { cursor: default; opacity: 0.9; }
-        .btn-fill { position: absolute; top: 0; left: 0; bottom: 0; width: 0%; background-color: rgba(35, 41, 72, 0.12); z-index: 1; transition: width 1s cubic-bezier(0.65, 0, 0.35, 1); }
-        .stat-text { font-weight: 900; font-size: 1.1rem; pointer-events: none; margin-left: 10px; flex-shrink: 0; position: relative; z-index: 2; color: var(--text-black); }
+        .opt-btn span { position: relative; z-index: 2; line-height: 1.4; transition: color 0.2s; }
+        .opt-btn:active { transform: scale(0.97); }
+        .opt-btn:disabled { cursor: default; }
+        
+        /* 게이지 배경 디자인 슬림 스왑 */
+        .btn-fill { position: absolute; top: 0; left: 0; bottom: 0; width: 0%; background-color: var(--bar-gauge); z-index: 1; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .stat-text { font-weight: 700; font-size: 1.05rem; pointer-events: none; margin-left: 12px; flex-shrink: 0; position: relative; z-index: 2; color: var(--main-bg); }
 
-        /* 시그니처 사각 솔리드 버튼 */
+        /* 하단 라운드 시그니처 버튼 */
         .main-btn { 
-            margin-top: 25px; padding: 16px 45px; background: var(--btn-bg-main); color: var(--btn-text-main); 
-            border: 3px solid var(--text-black); font-size: 1.15rem; font-weight: 900; cursor: pointer; 
-            letter-spacing: 0.1em; border-radius: 4px; box-shadow: 4px 4px 0px var(--text-black);
-            transition: all 0.1s ease; 
+            padding: 18px 48px; background: var(--btn-bg-main); color: var(--btn-text-main); 
+            border: none; font-size: 1.15rem; font-weight: 700; cursor: pointer; 
+            letter-spacing: -0.01em; border-radius: 24px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15); 
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s; 
         }
-        .main-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--text-black); }
+        .main-btn:active { transform: scale(0.96); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
 
-        /* 결과 분석 중간 페이지 영상 크기 고정 유지 및 그림자 최적화 */
-        #page-video.active { display: flex; background: transparent; }
+        /* 결과 분석 로딩 상태 */
+        #page-video.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        #page-video p { font-weight: 700; font-size: 1.2rem; color: #ffffff; margin-top: 24px; letter-spacing: -0.02em; }
+
+        /* 크기는 그대로 유지하면서 스타일만 고급화한 결과 비디오 플레이어 */
         .result-video { 
             width: 100%; 
-            max-width: 575px; 
-            border-radius: 12px; 
+            max-width: 575px; /* 원본 스케일 절대 사수 */
+            border-radius: 24px; 
             background: transparent !important; 
             box-shadow: none !important;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.45)); 
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.35)); 
         }
 
-        /* 결과 페이지 기존 정렬 고도화 */
-        #page-result.active { overflow-y: auto; justify-content: center; padding: 20px 10px; }
-        .result-header { width: 100%; text-align: left; border-bottom: 3px solid var(--text-black); padding-bottom: 10px; margin-bottom: 10px; }
-        .result-category { font-weight: 900; font-size: 0.85rem; letter-spacing: 0.25em; color: rgba(0,0,0,0.5); display: block; margin-bottom: 2px; }
-        .result-name { font-weight: 900; font-size: 4rem; line-height: 1; margin: 0; letter-spacing: -0.04em; color: var(--text-black); }
+        /* 결과 화면 전체 스크롤 시각 디자인 디벨롭 */
+        #page-result.active { overflow-y: auto; justify-content: flex-start; padding: 12px 4px; }
+        .result-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; }
         
-        /* 이미지 카드 겉 보더라인 정리 */
-        .card-img-wrap { width: 100%; max-width: 460px; margin: 15px auto; filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.15)); }
-        .card-img { width: 100%; height: auto; border-radius: 8px; border: 3px solid var(--text-black); display: block; }
+        .result-header { width: 100%; text-align: left; margin-bottom: 12px; }
+        .result-category { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); display: block; margin-bottom: 4px; }
+        .result-name { font-weight: 900; font-size: 3.6rem; line-height: 1; margin: 0; letter-spacing: -0.02em; color: #ffffff; }
         
-        #result-tag-container { width: 100%; text-align: left; background: #ffffff; border: 3px solid var(--text-black); padding: 18px; margin-bottom: 15px; box-shadow: 4px 4px 0px var(--text-black); border-radius: 4px; }
-        #result-tag { font-weight: 900; font-size: 1.35rem; color: var(--text-black); border-bottom: 4px solid var(--text-black); display: inline-block; padding-bottom: 5px; margin-bottom: 10px; letter-spacing: -0.01em; }
-        #result-desc { font-weight: 500; font-size: 1rem; color: var(--text-black); display: block; line-height: 1.45; opacity: 1; word-break: keep-all; }
+        /* 원본 크기를 사수한 결과 이미지 카드 및 드롭 섀도우 */
+        .card-img-wrap { width: 100%; max-width: 460px; margin: 16px auto; filter: drop-shadow(0 16px 36px rgba(0,0,0,0.25)); }
+        .card-img { width: 100%; height: auto; border-radius: 24px; display: block; }
+        
+        /* 말랑말랑한 컨텐츠 설명 보드 박스 */
+        #result-tag-container { width: 100%; text-align: left; background: var(--card-bg); border-radius: 24px; padding: 24px; margin-bottom: 20px; box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+        #result-tag { font-weight: 900; font-size: 1.4rem; color: var(--main-bg); border-bottom: 3px solid var(--bar-gauge); display: inline-block; padding-bottom: 6px; margin-bottom: 14px; letter-spacing: -0.02em; }
+        #result-desc { font-weight: 500; font-size: 1rem; color: var(--text-dark); display: block; line-height: 1.55; word-break: keep-all; }
 
-        /* 통계 인포바 그래픽 밀도 업그레이드 */
-        .total-stats { margin: 15px 0 20px 0; padding: 18px; background: #ffffff; border: 3px solid var(--text-black); border-radius: 4px; box-shadow: 4px 4px 0px var(--text-black); text-align: left; width: 100%; box-sizing: border-box; }
-        .stat-header { font-weight: 900; font-size: 1.1rem; color: var(--text-black); display: block; border-bottom: 2px dashed rgba(0,0,0,0.15); padding-bottom: 8px; margin-bottom: 14px; }
-        .stat-row { display: flex; align-items: center; margin-bottom: 12px; font-size: 0.95rem; font-weight: 900; color: var(--text-black); }
+        /* 토스 대시보드 스타일 실시간 차트 */
+        .total-stats { margin-bottom: 24px; padding: 24px; background: var(--card-bg); border-radius: 24px; width: 100%; box-sizing: border-box; box-shadow: 0 12px 32px rgba(0,0,0,0.08); text-align: left; }
+        .stat-header { font-weight: 700; font-size: 1.1rem; color: var(--text-dark); display: block; border-bottom: 1px solid #f2f4f6; padding-bottom: 12px; margin-bottom: 18px; letter-spacing: -0.02em; }
+        .stat-row { display: flex; align-items: center; margin-bottom: 16px; font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
         .stat-row:last-child { margin-bottom: 0; }
-        .stat-name { width: 60px; flex-shrink: 0; letter-spacing: 0.05em; } 
-        .stat-bar-bg { flex-grow: 1; height: 11px; background: rgba(0,0,0,0.05); border: 2px solid var(--text-black); margin: 0 12px; border-radius: 0px; overflow: hidden; }
-        .stat-bar-fill { height: 100%; background: var(--main-bg); width: 0%; transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
-        .stat-percent { width: 45px; text-align: right; flex-shrink: 0; font-size: 1rem; }
+        .stat-name { width: 50px; flex-shrink: 0; color: var(--text-muted); } 
+        .stat-bar-bg { flex-grow: 1; height: 10px; background: #f2f4f6; border-radius: 10px; margin: 0 14px; overflow: hidden; position: relative; }
+        .stat-bar-fill { height: 100%; background: var(--main-bg); border-radius: 10px; width: 0%; transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1); }
+        .stat-percent { width: 45px; text-align: right; flex-shrink: 0; font-size: 1rem; color: var(--main-bg); }
 
-        /* 방명록 오리지널 상/하 레이아웃 및 스크롤 고정 규격 절대 보존 */
-        #page-guestbook.active { display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden; height: 100%; }
-        .gb-fixed-header { width: 100%; height: 50vh; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; z-index: 100; margin-bottom: -50px; }
-        .gb-scroll-area { flex-grow: 1; overflow-y: auto; width: 100%; padding: 0 5px; box-sizing: border-box; }
-        .gb-scroll-area::-webkit-scrollbar { width: 4px; }
-        .gb-scroll-area::-webkit-scrollbar-thumb { background: var(--text-black); border-radius: 10px; }
-        .gb-fixed-footer { width: 100%; flex-shrink: 0; padding: 10px 0 25px 0; z-index: 100; }
-
-        .gb-title { font-weight: 900; font-size: 2.2rem; margin-bottom: 20px; display: block; color: var(--text-black); text-align: left; padding-left: 5px; border-bottom: 3px solid var(--text-black); padding-bottom: 6px; width: 100%; letter-spacing: -0.01em; }
+        /* 방명록(GUESTBOOK) 앱 인터페이스 리디자인 */
+        .gb-title { font-weight: 700; font-size: 2.2rem; margin-bottom: 24px; display: block; color: #ffffff; text-align: left; letter-spacing: -0.01em; width: 100%; }
         
-        .gb-input-box { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; width: 100%; }
-        .gb-input-row { display: flex; gap: 10px; width: 100%; }
-        .gb-input { padding: 15px; border: 3px solid var(--text-black); border-radius: 4px; font-family: inherit; font-weight: 700; font-size: 1rem; outline: none; background: #ffffff; color: var(--text-black); box-shadow: inset 2px 2px 0px rgba(0,0,0,0.05); }
-        .gb-input::placeholder { color: rgba(0,0,0,0.4); font-weight: 500; } 
-        #gb-nickname-field { width: 100px; flex-shrink: 0; text-align: center; }
+        .gb-input-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; width: 100%; flex-shrink: 0; }
+        .gb-input-row { display: flex; gap: 12px; width: 100%; }
+        .gb-input { padding: 18px; border: none; border-radius: 16px; font-family: inherit; font-weight: 500; font-size: 1rem; outline: none; background: #ffffff; color: var(--text-dark); box-shadow: 0 4px 16px rgba(0,0,0,0.04); transition: box-shadow 0.2s; }
+        .gb-input:focus { box-shadow: 0 0 0 3px rgba(255,255,255,0.4); }
+        .gb-input::placeholder { color: var(--text-muted); font-weight: 400; } 
+        #gb-nickname-field { width: 100px; flex-shrink: 0; text-align: center; font-weight: 700; }
         #gb-input-field { flex-grow: 1; }
         
-        .gb-submit { background: var(--btn-bg-main); color: var(--btn-text-main); border: 3px solid var(--text-black); padding: 15px 0; border-radius: 4px; font-weight: 900; cursor: pointer; font-size: 1.05rem; width: 100%; box-shadow: 4px 4px 0px var(--text-black); transition: all 0.1s ease; }
-        .gb-submit:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--text-black); }
+        .gb-submit { background: var(--text-dark); color: #ffffff; border: none; padding: 18px 0; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1.1rem; width: 100%; box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: transform 0.2s; }
+        .gb-submit:active { transform: scale(0.98); }
         
-        .gb-list { list-style: none; padding: 0; margin: 0; text-align: left; width: 100%; }
-        .gb-item { background: #ffffff; padding: 16px; border: 3px solid var(--text-black); border-radius: 4px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 4px 4px 0px rgba(0,0,0,0.1); animation: fadeIn 0.5s ease forwards; opacity: 0; }
-        .gb-head-wrap { width: 55px; height: 55px; margin-right: 15px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--text-black); background: rgba(0,0,0,0.02); border-radius: 2px; }
-        .gb-head-img { width: 92%; height: 92%; object-fit: contain; }
-        .gb-divider { width: 2px; height: 28px; background-color: var(--text-black); margin-right: 15px; opacity: 1; }
-        .gb-content-wrap { flex-grow: 1; }
-        .gb-msg { font-weight: 700; font-size: 1.05rem; color: var(--text-black); display: block; margin-bottom: 4px; word-break: break-all; line-height: 1.35; }
+        /* 피드 스크롤 리스트 고도화 */
+        .gb-scroll-area { flex-grow: 1; overflow-y: auto; width: 100%; padding-right: 2px; box-sizing: border-box; }
+        .gb-scroll-area::-webkit-scrollbar { width: 4px; }
+        .gb-scroll-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
         
-        .gb-info-row { font-size: 0.78rem; color: rgba(0,0,0,0.45); font-weight: 700; display: flex; gap: 6px; }
-        .gb-nick { color: var(--text-black); font-weight: 900; }
+        .gb-list { list-style: none; padding: 0; margin: 0; width: 100%; }
+        .gb-item { background: var(--card-bg); padding: 18px 20px; border: none; border-radius: 20px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.04); animation: fadeIn 0.4s ease forwards; opacity: 0; }
+        .gb-head-wrap { width: 46px; height: 46px; margin-right: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 12px; }
+        .gb-head-img { width: 85%; height: 85%; object-fit: contain; }
+        .gb-divider { width: 1px; height: 28px; background-color: #f2f4f6; margin-right: 14px; }
+        .gb-content-wrap { flex-grow: 1; text-align: left; }
+        .gb-msg { font-weight: 500; font-size: 1.05rem; color: var(--text-dark); display: block; margin-bottom: 4px; word-break: break-all; line-height: 1.4; }
+        
+        .gb-info-row { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; display: flex; gap: 6px; }
+        .gb-nick { color: var(--text-dark); font-weight: 700; }
 
-        .pagination { display: flex; justify-content: center; gap: 8px; margin: 10px 0; width: 100%; }
-        .pg-btn { width: 44px; height: 44px; border: 3px solid var(--text-black); background: #ffffff; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-family: inherit; color: var(--text-black); font-size: 1.1rem; box-shadow: 2px 2px 0px var(--text-black); transition: all 0.1s ease; }
-        .pg-btn.active { background: var(--btn-bg-main); color: var(--btn-text-main); box-shadow: none; transform: translate(2px, 2px); }
-        .pg-btn:disabled { opacity: 0.3; cursor: default; box-shadow: none; transform: none; }
+        .gb-fixed-footer { width: 100%; flex-shrink: 0; padding: 12px 0 10px 0; background: transparent; }
+        .pagination { display: flex; justify-content: center; gap: 6px; width: 100%; }
+        .pg-btn { width: 40px; height: 40px; border: none; background: rgba(255,255,255,0.15); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-family: inherit; color: #ffffff; font-size: 1rem; transition: all 0.2s; }
+        .pg-btn.active { background: #ffffff; color: var(--main-bg); font-weight: 900; }
+        .pg-btn:disabled { opacity: 0.25; cursor: default; }
 
-        /* 모달 팝업 디자인 고급화 */
-        #custom-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
-        .modal-content { background: #ffffff; border: 4px solid var(--text-black); border-radius: 4px; padding: 40px 30px; text-align: center; max-width: 320px; width: 80%; box-shadow: 6px 6px 0px var(--text-black); animation: slideUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .modal-text { font-weight: 900; font-size: 1.4rem; color: var(--text-black); margin-bottom: 30px; display: block; line-height: 1.4; letter-spacing: -0.01em; }
-        .modal-btn-group { display: flex; gap: 12px; justify-content: center; }
-        .modal-btn { padding: 12px 22px; border: 3px solid var(--text-black); border-radius: 4px; font-weight: 900; font-size: 1.05rem; cursor: pointer; flex: 1; box-shadow: 3px 3px 0px var(--text-black); transition: all 0.1s ease; font-family: inherit; }
-        .modal-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--text-black); }
-        .modal-btn.confirm { background: var(--btn-bg-main); color: var(--btn-text-main); }
-        .modal-btn.cancel { background: transparent; color: var(--text-black); }
+        /* 토스 디자인의 깔끔하고 라운딩 높은 다이얼로그 모달 */
+        #custom-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #ffffff; border: none; border-radius: 26px; padding: 36px 28px; text-align: center; max-width: 330px; width: 85%; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .modal-text { font-weight: 700; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 28px; display: block; line-height: 1.45; letter-spacing: -0.01em; }
+        .modal-btn-group { display: flex; gap: 10px; justify-content: center; }
+        .modal-btn { padding: 15px 22px; border: none; border-radius: 14px; font-weight: 700; font-size: 1.05rem; cursor: pointer; flex: 1; transition: background-color 0.2s; font-family: inherit; }
+        .modal-btn:active { transform: scale(0.98); }
+        .modal-btn.confirm { background: var(--main-bg); color: #ffffff; }
+        .modal-btn.cancel { background: #f2f4f6; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
     <div id="main-container">
         <div class="inner-content">
+            
             <div id="page-start" class="page active">
                 <img src="logo.png" alt="Logo" class="main-logo">
-                <p style="font-weight: 900; font-size: 1.35rem; margin-bottom: 20px; color: var(--text-black); letter-spacing: -0.02em;">나의 소비 캐릭터 유형 찾기</p>
+                <p>나의 소비 캐릭터 유형 찾기</p>
                 <button class="main-btn" onclick="nextPage('q1')">시작하기</button>
             </div>
 
@@ -219,13 +243,13 @@
 
             <div id="page-video" class="page">
                 <video id="loading-video" class="result-video" playsinline muted></video>
-                <p style="font-weight: 900; color: #000; margin-top: 25px; letter-spacing: -0.01em;">결과 분석 중...</p>
+                <p>결과 분석 중...</p>
             </div>
 
             <div id="page-result" class="page">
                 <div class="result-wrapper">
                     <div class="result-header">
-                        <span class="result-category">YOUR TYPE</span>
+                        <span class="result-category">CHARACTER TYPE</span>
                         <h1 id="result-name" class="result-name">NAME</h1>
                     </div>
                     <div class="card-img-wrap"><img src="" alt="ID Card" id="result-card" class="card-img"></div>
@@ -239,7 +263,7 @@
                         <div class="stat-row"><span class="stat-name">MAX</span><div class="stat-bar-bg"><div id="bar-total-b" class="stat-bar-fill"></div></div><span id="percent-total-b" class="stat-percent">0%</span></div>
                         <div class="stat-row"><span class="stat-name">HUGO</span><div class="stat-bar-bg"><div id="bar-total-c" class="stat-bar-fill"></div></div><span id="percent-total-c" class="stat-percent">0%</span></div>
                     </div>
-                    <button class="main-btn" style="width: 100%; margin-bottom: 20px;" onclick="nextPage('guestbook')">방명록 남기기</button>
+                    <button class="main-btn" style="width:100%; margin-bottom: 24px;" onclick="nextPage('guestbook')">방명록 남기기</button>
                 </div>
             </div>
 
@@ -253,7 +277,7 @@
                         </div>
                         <button class="gb-submit" onclick="showModal('submit')">전송</button>
                     </div>
-                    <button class="main-btn" style="margin: 0; width: 100%; padding: 15px; font-weight: 700;" onclick="resetTest()">처음으로 (다시하기)</button>
+                    <button class="main-btn" style="margin: 0 0 24px 0; width: 100%; padding: 16px; font-size:1.05rem;" onclick="resetTest()">다시하기</button>
                 </div>
                 <div class="gb-scroll-area" id="gb-scroll-container">
                     <div id="gb-list-container" class="gb-list"></div>

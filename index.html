@@ -134,18 +134,17 @@
         .stat-bar-fill { height: 100%; background: var(--main-bg); border-radius: 10px; width: 0%; transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1); }
         .stat-percent { width: 45px; text-align: right; flex-shrink: 0; color: var(--main-bg); }
 
-        /* [수정] 가로 잘림 및 스크롤 완벽 해결을 위한 게스트북 핏 조정 */
-        #page-guestbook.active { overflow-y: auto; justify-content: center; padding: 16px 2px; } /* 내부 스크롤 패딩 미세 조정 */
+        /* 게스트북 */
+        #page-guestbook.active { overflow-y: auto; justify-content: center; padding: 16px 2px; }
         .gb-container { width: 100%; max-width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
         .gb-title { font-weight: 700; font-size: 2.2rem; margin-bottom: 20px; display: block; color: #ffffff; text-align: left; width: 100%; padding: 0 2px; }
         
         .gb-input-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; width: 100%; }
         .gb-input-row { display: flex; gap: 12px; width: 100%; }
         
-        /* 인풋창 패딩 및 박스 크기 계산 고정 */
         .gb-input { padding: 18px 16px; border: none; border-radius: 16px; font-family: inherit; font-weight: 500; font-size: 1rem; outline: none; background: #ffffff; color: var(--text-dark); box-shadow: 0 4px 16px rgba(0,0,0,0.1); width: 100%; }
         #gb-nickname-field { width: 95px; flex-shrink: 0; text-align: center; font-weight: 700; }
-        #gb-input-field { flex-grow: 1; width: calc(100% - 107px); } /* 유동 폭을 위해 정확히 연산 */
+        #gb-input-field { flex-grow: 1; width: calc(100% - 107px); }
         
         .gb-submit { background: var(--btn-bg-main); color: #ffffff; border: 2px solid rgba(255,255,255,0.3); padding: 18px 0; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1.1rem; width: 100%; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .gb-submit:active { transform: scale(0.98); background: #000; }
@@ -155,7 +154,7 @@
         .gb-head-wrap { width: 44px; height: 44px; margin-right: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 12px; }
         .gb-head-img { width: 85%; height: 85%; object-fit: contain; }
         .gb-divider { width: 1px; height: 24px; background-color: #f2f4f6; margin-right: 14px; }
-        .gb-content-wrap { flex-grow: 1; text-align: left; overflow: hidden; } /* 글자 길어짐 방지 */
+        .gb-content-wrap { flex-grow: 1; text-align: left; overflow: hidden; }
         .gb-msg { font-weight: 500; font-size: 1.05rem; color: var(--text-dark); display: block; margin-bottom: 4px; word-break: break-all; line-height: 1.4; }
         .gb-info-row { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; display: flex; gap: 6px; }
         .gb-nick { color: var(--text-dark); font-weight: 700; }
@@ -321,7 +320,9 @@
         window.nextPage = function(pId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById('page-' + pId);
-            target.classList.add('active');
+            if(target) {
+                target.classList.add('active');
+            }
             isProcessing = false;
         };
 
@@ -421,4 +422,136 @@
                         <span class="gb-msg">${data.message}</span>
                         <div class="gb-info-row">
                             <span class="gb-time">${timeStr}</span>
-                            <span class="gb-nick">
+                            <span class="gb-nick">| ${nickname}</span>
+                        </div>
+                    </div>`;
+                container.appendChild(item);
+            });
+            if (totalPages > 1) {
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'pg-btn'; prevBtn.innerText = '<';
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.onclick = () => { currentPage--; renderGuestbook(); };
+                paginationContainer.appendChild(prevBtn);
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = `pg-btn ${i === currentPage ? 'active' : ''}`;
+                    btn.innerText = i;
+                    btn.onclick = () => { currentPage = i; renderGuestbook(); };
+                    paginationContainer.appendChild(btn);
+                }
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'pg-btn'; nextBtn.innerText = '>';
+                nextBtn.disabled = currentPage === totalPages;
+                nextBtn.onclick = () => { currentPage++; renderGuestbook(); };
+                paginationContainer.appendChild(nextBtn);
+            }
+        }
+
+        window.handleSelect = async function(qId, optId) {
+            if (isProcessing) return;
+            isProcessing = true;
+            const currentButtons = document.querySelectorAll(`#page-${qId} .opt-btn`);
+            currentButtons.forEach(btn => btn.disabled = true);
+            userAnswers[optId]++;
+            answerHistory.push(optId); 
+            const statsRef = doc(db, "surveyStats", qId);
+            try {
+                await updateDoc(statsRef, { [optId.toUpperCase()]: increment(1) });
+                const snap = await getDoc(statsRef);
+                if (snap.exists()) {
+                    const data = snap.data();
+                    const total = (data.A||0)+(data.B||0)+(data.C||0);
+                    ['a','b','c'].forEach(o => {
+                        const count = data[o.toUpperCase()] || 0;
+                        const p = total > 0 ? Math.round((count/total)*100) : 0;
+                        const fillBar = document.getElementById(`bar-${qId}-${o}`);
+                        if(fillBar) fillBar.style.width = p + "%";
+                        const textSpan = document.getElementById(`text-${qId}-${o}`);
+                        if(textSpan) textSpan.innerText = p + "%";
+                    });
+                }
+                setTimeout(() => {
+                    // [버그 수정 완료] 다음 qId 바인딩 넘버링 매칭 보완
+                    if (qId === 'q1') nextPage('q2');
+                    else if (qId === 'q2') nextPage('q3');
+                    else if (qId === 'q3') nextPage('q4');
+                    else if (qId === 'q4') startVideoSequence();
+                }, 1000);
+            } catch (e) { console.error(e); isProcessing = false; }
+        };
+
+        async function startVideoSequence() {
+            const { a, b, c } = userAnswers;
+            const maxVal = Math.max(a, b, c);
+            const candidates = [];
+            if (a === maxVal) candidates.push('a');
+            if (b === maxVal) candidates.push('b');
+            if (c === maxVal) candidates.push('c');
+            let finalType = (candidates.length === 1) ? candidates[0] : answerHistory.slice().reverse().find(ans => candidates.includes(ans));
+            nextPage('video'); 
+            const videoEl = document.getElementById('loading-video');
+            if(!videoEl) return;
+            if (finalType === 'a') videoEl.src = "Video Project 1.mp4";
+            else if (finalType === 'b') videoEl.src = "Video Project 2.mp4";
+            else videoEl.src = "Video Project 3.mp4";
+            videoEl.load();
+            const playPromise = videoEl.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {}).catch(error => {
+                    console.log("자동재생 제한 예외 처리 차단:", error);
+                    calculateResult(); 
+                });
+            }
+            videoEl.onended = () => { 
+                videoEl.pause();
+                videoEl.src = "";
+                videoEl.load();
+                calculateResult(); 
+            };
+        }
+
+        async function calculateResult() {
+            nextPage('result');
+            const { a, b, c } = userAnswers;
+            const maxVal = Math.max(a, b, c);
+            const candidates = [];
+            if (a === maxVal) candidates.push('a');
+            if (b === maxVal) candidates.push('b');
+            if (c === maxVal) candidates.push('c');
+            let finalType = (candidates.length === 1) ? candidates[0] : answerHistory.slice().reverse().find(ans => candidates.includes(ans));
+            
+            const nameEl = document.getElementById('result-name');
+            const tagEl = document.getElementById('result-tag');
+            const descEl = document.getElementById('result-desc');
+            const cardEl = document.getElementById('result-card');
+
+            if (finalType === 'a') { 
+                nameEl.innerText = "KRU"; cardEl.src = "card1.png"; tagEl.innerText = "공감적 소비"; 
+                descEl.innerText = "함께 나누는 경험과 소속감에서 찾는 가치"; currentResultHead = "head1.png"; 
+            } else if (finalType === 'b') { 
+                nameEl.innerText = "MAX"; cardEl.src = "card2.png"; tagEl.innerText = "선구적 소비"; 
+                descEl.innerText = "남들보다 빠른 경험과 희소성에서 찾는 가치"; currentResultHead = "head2.png"; 
+            } else { 
+                nameEl.innerText = "HUGO"; cardEl.src = "card3.png"; tagEl.innerText = "주체적 소비"; 
+                descEl.innerText = "타인의 시선보다 나만의 확고한 기준에서 찾는 가치"; currentResultHead = "head3.png"; 
+            }
+
+            try {
+                const q1Snap = await getDoc(doc(db, "surveyStats", "q1"));
+                if (q1Snap.exists()) {
+                    const d = q1Snap.data();
+                    const total = (d.A||0)+(d.B||0)+(d.C||0);
+                    document.getElementById('total-participation-text').innerText = `현재 ${total}명이 참여했습니다`;
+                    ['A','B','C'].forEach(id => {
+                        const count = d[id] || 0;
+                        const p = total > 0 ? Math.round((count/total)*100) : 0;
+                        document.getElementById(`bar-total-${id.toLowerCase()}`).style.width = p+"%";
+                        document.getElementById(`percent-total-${id.toLowerCase()}`).innerText = p+"%";
+                    });
+                }
+            } catch(e) { console.error("결과 스탯 수신 에러 우회:", e); }
+        }
+    </script>
+</body>
+</html>

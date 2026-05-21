@@ -23,8 +23,8 @@
         }
 
         /* --- 애니메이션 Keyframes --- */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
@@ -38,13 +38,13 @@
         #main-container { 
             width: 100vw; height: 100vh; background-color: var(--main-bg); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            padding: 40px; position: relative; overflow: hidden; 
+            padding: 24px; position: relative; overflow: hidden; 
         }
 
-        /* 갤탭 울트라 화면에 맞춰 배경 시그니처 로고 스케일 업 */
+        /* 배경 시그니처 로고 */
         #main-container::before { 
-            content: ""; position: absolute; bottom: -150px; right: -200px; 
-            width: 1200px; height: 1200px; background-image: url('logo2.png'); background-size: contain; 
+            content: ""; position: absolute; bottom: -100px; right: -150px; 
+            width: 900px; height: 900px; background-image: url('logo2.png'); background-size: contain; 
             background-repeat: no-repeat; background-position: center; 
             filter: brightness(0) saturate(100%) invert(15%) sepia(20%) saturate(1500%) hue-rotate(200deg);
             opacity: 0.5; z-index: 0; pointer-events: none; 
@@ -52,130 +52,123 @@
         }
 
         #main-container::after { 
-            content: ""; position: absolute; top: -150px; left: -250px; 
-            width: 1200px; height: 1200px; background-image: url('logo2.png'); background-size: contain; 
+            content: ""; position: absolute; top: -100px; left: -200px; 
+            width: 900px; height: 900px; background-image: url('logo2.png'); background-size: contain; 
             background-repeat: no-repeat; background-position: center; 
             filter: brightness(0) saturate(100%) invert(15%) sepia(20%) saturate(1500%) hue-rotate(200deg);
             opacity: 0.5; z-index: 0; pointer-events: none; 
             transform: scaleX(-1) rotate(-12deg);
         }
 
-        /* [수정] 갤탭 울트라 해상도 최적화: 가로 최대 너비 전면 확장 */
         .inner-content { 
-            width: 100%; max-width: 800px; position: relative; z-index: 10; 
-            height: 92vh; display: flex; flex-direction: column; 
+            width: 100%; max-width: 480px; position: relative; z-index: 10; 
+            height: 94vh; display: flex; flex-direction: column; 
         }
         
         .page { display: none; flex-direction: column; align-items: center; width: 100%; height: 100%; }
-        .page.active { display: flex; text-align: center; animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .page.active { display: flex; text-align: center; animation: fadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 
         /* 시작 페이지 */
         #page-start { justify-content: center; }
-        #page-start .main-logo { width: 100%; max-width: 520px; height: auto; margin-bottom: 40px; }
-        #page-start p { font-weight: 700; font-size: 2.2rem; margin-bottom: 48px; color: #ffffff; letter-spacing: -0.02em; }
+        #page-start .main-logo { width: 100%; max-width: 320px; height: auto; margin-bottom: 24px; }
+        #page-start p { font-weight: 700; font-size: 1.4rem; margin-bottom: 32px; color: #ffffff; }
 
         /* 질문 페이지 */
         #page-q1, #page-q2, #page-q3, #page-q4 { justify-content: center; }
-        .sub-logo { width: 100%; max-width: 500px; height: auto; margin-bottom: 40px; filter: none; display: block; }
+        .sub-logo { width: 100%; max-width: 390px; height: auto; margin-bottom: 28px; filter: none; display: block; }
 
-        .progress-container { width: 100%; margin-bottom: 48px; }
-        .progress-info { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.3rem; margin-bottom: 14px; color: rgba(255,255,255,0.9); }
-        .main-progress-bg { width: 100%; height: 10px; background-color: var(--progress-bg); border-radius: 10px; overflow: hidden; }
+        .progress-container { width: 100%; margin-bottom: 36px; }
+        .progress-info { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; color: rgba(255,255,255,0.9); }
+        .main-progress-bg { width: 100%; height: 6px; background-color: var(--progress-bg); border-radius: 10px; overflow: hidden; }
         .main-progress-fill { height: 100%; background-color: var(--progress-fill); border-radius: 10px; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-        /* [수정] 질문지 타이틀 가시성 확장 */
-        h2 { font-weight: 700; font-size: 2.4rem; text-align: left; margin: 0 0 44px 0; letter-spacing: -0.02em; color: #ffffff; line-height: 1.4; word-break: keep-all; }
+        h2 { font-weight: 700; font-size: 1.7rem; text-align: left; margin: 0 0 32px 0; letter-spacing: -0.03em; color: #ffffff; line-height: 1.4; word-break: keep-all; }
 
-        /* [수정] 터치 영역 대폭 확장을 위한 패딩 및 폰트 디벨롭 */
         .opt-btn { 
             width: 100%; position: relative; background: var(--card-bg); border: none; 
-            padding: 28px 36px; margin-bottom: 20px; font-size: 1.5rem; cursor: pointer; 
+            padding: 20px 24px; margin-bottom: 14px; font-size: 1.05rem; cursor: pointer; 
             display: flex; justify-content: space-between; align-items: center; z-index: 20; 
             overflow: hidden; font-family: 'Noto Sans KR', sans-serif; color: var(--text-dark); 
-            font-weight: 500; border-radius: 28px; text-align: left; 
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15); transition: transform 0.2s; 
+            font-weight: 500; border-radius: 20px; text-align: left; 
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); transition: transform 0.2s; 
         }
         .opt-btn span { position: relative; z-index: 2; line-height: 1.4; }
-        .opt-btn:active { transform: scale(0.98); }
+        .opt-btn:active { transform: scale(0.97); }
         
         .btn-fill { position: absolute; top: 0; left: 0; bottom: 0; width: 0%; background-color: var(--bar-gauge); z-index: 1; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-        .stat-text { font-weight: 700; font-size: 1.5rem; pointer-events: none; margin-left: 16px; flex-shrink: 0; position: relative; z-index: 2; color: var(--main-bg); }
+        .stat-text { font-weight: 700; font-size: 1.05rem; pointer-events: none; margin-left: 12px; flex-shrink: 0; position: relative; z-index: 2; color: var(--main-bg); }
 
         .main-btn { 
-            padding: 24px 72px; background: var(--btn-bg-main); color: var(--btn-text-main); 
-            border: none; font-size: 1.6rem; font-weight: 700; cursor: pointer; 
-            border-radius: 32px; box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25); 
+            padding: 18px 48px; background: var(--btn-bg-main); color: var(--btn-text-main); 
+            border: none; font-size: 1.15rem; font-weight: 700; cursor: pointer; 
+            border-radius: 24px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2); 
             transition: transform 0.2s; 
         }
         .main-btn:active { transform: scale(0.96); }
 
         /* 결과 분석 비디오 페이지 */
         #page-video { justify-content: center; align-items: center; }
-        #page-video p { font-weight: 700; font-size: 1.8rem; color: #ffffff; margin-top: 32px; }
-        /* 비디오 원본 크기 절대 보존 */
-        .result-video { width: 100%; max-width: 575px; border-radius: 32px; filter: drop-shadow(0 25px 50px rgba(0,0,0,0.45)); }
+        #page-video p { font-weight: 700; font-size: 1.2rem; color: #ffffff; margin-top: 24px; }
+        .result-video { width: 100%; max-width: 575px; border-radius: 24px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4)); }
 
-        /* 결과 화면 중앙 정렬 및 갤탭 웅장화 */
-        #page-result.active { overflow-y: auto; justify-content: center; padding: 30px 4px; }
+        /* 결과 화면 */
+        #page-result.active { overflow-y: auto; justify-content: center; padding: 20px 0; }
         .result-wrapper { width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
         
-        .result-header { width: 100%; text-align: left; margin-bottom: 16px; }
-        .result-category { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); display: block; margin-bottom: 6px; }
-        .result-name { font-weight: 900; font-size: 5rem; line-height: 1; margin: 0; color: #ffffff; }
+        .result-header { width: 100%; text-align: left; margin-bottom: 12px; }
+        .result-category { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); display: block; margin-bottom: 4px; }
+        .result-name { font-weight: 900; font-size: 3.6rem; line-height: 1; margin: 0; color: #ffffff; }
         
-        /* 이미지 원본 사수 */
-        .card-img-wrap { width: 100%; max-width: 460px; margin: 20px auto; filter: drop-shadow(0 20px 45px rgba(0,0,0,0.35)); }
-        .card-img { width: 100%; height: auto; border-radius: 32px; display: block; }
+        .card-img-wrap { width: 100%; max-width: 460px; margin: 16px auto; filter: drop-shadow(0 16px 36px rgba(0,0,0,0.3)); }
+        .card-img { width: 100%; height: auto; border-radius: 24px; display: block; }
         
-        #result-tag-container { width: 100%; text-align: left; background: var(--card-bg); border-radius: 32px; padding: 32px; margin-bottom: 28px; box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
-        #result-tag { font-weight: 900; font-size: 2rem; color: var(--main-bg); border-bottom: 4px solid #f2f4f6; display: inline-block; padding-bottom: 8px; margin-bottom: 20px; }
-        #result-desc { font-weight: 500; font-size: 1.3rem; color: var(--text-dark); display: block; line-height: 1.6; word-break: keep-all; }
+        #result-tag-container { width: 100%; text-align: left; background: var(--card-bg); border-radius: 24px; padding: 24px; margin-bottom: 20px; box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+        #result-tag { font-weight: 900; font-size: 1.4rem; color: var(--main-bg); border-bottom: 3px solid #f2f4f6; display: inline-block; padding-bottom: 6px; margin-bottom: 14px; }
+        #result-desc { font-weight: 500; font-size: 1rem; color: var(--text-dark); display: block; line-height: 1.55; word-break: keep-all; }
 
-        .total-stats { margin-bottom: 32px; padding: 32px; background: var(--card-bg); border-radius: 32px; width: 100%; box-sizing: border-box; box-shadow: 0 16px 40px rgba(0,0,0,0.2); text-align: left; }
-        .stat-header { font-weight: 700; font-size: 1.5rem; color: var(--text-dark); display: block; border-bottom: 2px solid #f2f4f6; padding-bottom: 16px; margin-bottom: 24px; }
-        .stat-row { display: flex; align-items: center; margin-bottom: 20px; font-size: 1.3rem; font-weight: 700; color: var(--text-dark); }
-        .stat-row:last-child { margin-bottom: 0; }
-        .stat-name { width: 70px; flex-shrink: 0; color: var(--text-muted); } 
-        .stat-bar-bg { flex-grow: 1; height: 14px; background: #f2f4f6; border-radius: 10px; margin: 0 20px; overflow: hidden; }
+        .total-stats { margin-bottom: 24px; padding: 24px; background: var(--card-bg); border-radius: 24px; width: 100%; box-sizing: border-box; box-shadow: 0 12px 32px rgba(0,0,0,0.15); text-align: left; }
+        .stat-header { font-weight: 700; font-size: 1.1rem; color: var(--text-dark); display: block; border-bottom: 1px solid #f2f4f6; padding-bottom: 12px; margin-bottom: 18px; }
+        .stat-row { display: flex; align-items: center; margin-bottom: 16px; font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
+        .stat-name { width: 50px; flex-shrink: 0; color: var(--text-muted); } 
+        .stat-bar-bg { flex-grow: 1; height: 10px; background: #f2f4f6; border-radius: 10px; margin: 0 14px; overflow: hidden; }
         .stat-bar-fill { height: 100%; background: var(--main-bg); border-radius: 10px; width: 0%; transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1); }
-        .stat-percent { width: 60px; text-align: right; flex-shrink: 0; font-size: 1.3rem; color: var(--main-bg); }
+        .stat-percent { width: 45px; text-align: right; flex-shrink: 0; color: var(--main-bg); }
 
-        /* 게스트북 화면 갤탭 비율 매칭 */
-        #page-guestbook.active { overflow-y: auto; justify-content: center; padding: 24px 4px; }
-        .gb-container { width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
-        .gb-title { font-weight: 700; font-size: 3rem; margin-bottom: 32px; display: block; color: #ffffff; text-align: left; width: 100%; }
+        /* [수정] 가로 잘림 및 스크롤 완벽 해결을 위한 게스트북 핏 조정 */
+        #page-guestbook.active { overflow-y: auto; justify-content: center; padding: 16px 2px; } /* 내부 스크롤 패딩 미세 조정 */
+        .gb-container { width: 100%; max-width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+        .gb-title { font-weight: 700; font-size: 2.2rem; margin-bottom: 20px; display: block; color: #ffffff; text-align: left; width: 100%; padding: 0 2px; }
         
-        .gb-input-box { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; width: 100%; }
-        .gb-input-row { display: flex; gap: 16px; width: 100%; }
-        .gb-input { padding: 24px; border: none; border-radius: 24px; font-family: inherit; font-weight: 500; font-size: 1.3rem; outline: none; background: #ffffff; color: var(--text-dark); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-        #gb-nickname-field { width: 160px; flex-shrink: 0; text-align: center; font-weight: 700; }
-        #gb-input-field { flex-grow: 1; }
+        .gb-input-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; width: 100%; }
+        .gb-input-row { display: flex; gap: 12px; width: 100%; }
         
-        .gb-submit { background: var(--btn-bg-main); color: #ffffff; border: 2px solid rgba(255,255,255,0.3); padding: 22px 0; border-radius: 24px; font-weight: 700; cursor: pointer; font-size: 1.4rem; width: 100%; transition: all 0.2s; box-shadow: 0 10px 24px rgba(0,0,0,0.2); }
+        /* 인풋창 패딩 및 박스 크기 계산 고정 */
+        .gb-input { padding: 18px 16px; border: none; border-radius: 16px; font-family: inherit; font-weight: 500; font-size: 1rem; outline: none; background: #ffffff; color: var(--text-dark); box-shadow: 0 4px 16px rgba(0,0,0,0.1); width: 100%; }
+        #gb-nickname-field { width: 95px; flex-shrink: 0; text-align: center; font-weight: 700; }
+        #gb-input-field { flex-grow: 1; width: calc(100% - 107px); } /* 유동 폭을 위해 정확히 연산 */
+        
+        .gb-submit { background: var(--btn-bg-main); color: #ffffff; border: 2px solid rgba(255,255,255,0.3); padding: 18px 0; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1.1rem; width: 100%; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .gb-submit:active { transform: scale(0.98); background: #000; }
         
         .gb-list { list-style: none; padding: 0; margin: 0; width: 100%; }
-        
-        /* [수정] 대화면 해상도 대응을 위해 피드 스크롤 내 고정 가변 크기 확보 */
-        .gb-item { background: var(--card-bg); padding: 22px 28px; border-radius: 24px; margin-bottom: 16px; display: flex; align-items: center; box-shadow: 0 12px 32px rgba(0,0,0,0.12); animation: fadeIn 0.4s ease forwards; opacity: 0; }
-        .gb-head-wrap { width: 64px; height: 64px; margin-right: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 16px; border: 1px solid #f2f4f6; }
+        .gb-item { background: var(--card-bg); padding: 16px 20px; border-radius: 20px; margin-bottom: 10px; display: flex; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; animation: fadeIn 0.4s ease forwards; opacity: 0; }
+        .gb-head-wrap { width: 44px; height: 44px; margin-right: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 12px; }
         .gb-head-img { width: 85%; height: 85%; object-fit: contain; }
-        .gb-divider { width: 2px; height: 36px; background-color: #f2f4f6; margin-right: 20px; }
-        .gb-content-wrap { flex-grow: 1; text-align: left; }
-        .gb-msg { font-weight: 500; font-size: 1.4rem; color: var(--text-dark); display: block; margin-bottom: 6px; word-break: break-all; line-height: 1.4; }
-        .gb-info-row { font-size: 1rem; color: var(--text-muted); font-weight: 500; display: flex; gap: 8px; }
+        .gb-divider { width: 1px; height: 24px; background-color: #f2f4f6; margin-right: 14px; }
+        .gb-content-wrap { flex-grow: 1; text-align: left; overflow: hidden; } /* 글자 길어짐 방지 */
+        .gb-msg { font-weight: 500; font-size: 1.05rem; color: var(--text-dark); display: block; margin-bottom: 4px; word-break: break-all; line-height: 1.4; }
+        .gb-info-row { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; display: flex; gap: 6px; }
         .gb-nick { color: var(--text-dark); font-weight: 700; }
 
-        .pagination { display: flex; justify-content: center; gap: 10px; margin: 24px 0; width: 100%; }
-        .pg-btn { width: 54px; height: 54px; border: none; background: rgba(255,255,255,0.2); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 16px; font-family: inherit; color: #ffffff; font-size: 1.3rem; transition: all 0.2s; box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
-        .pg-btn.active { background: #ffffff; color: var(--main-bg); font-weight: 900; }
+        .pagination { display: flex; justify-content: center; gap: 6px; margin: 16px 0; width: 100%; }
+        .pg-btn { width: 40px; height: 40px; border: none; background: rgba(255,255,255,0.2); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-family: inherit; color: #ffffff; transition: all 0.2s; }
+        .pg-btn.active { background: #ffffff; color: var(--main-bg); }
 
-        /* 다이얼로그 모달 스케일업 */
         #custom-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal-content { background: #ffffff; border-radius: 36px; padding: 50px 40px; text-align: center; max-width: 460px; width: 85%; box-shadow: 0 30px 70px rgba(0,0,0,0.6); animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .modal-text { font-weight: 700; font-size: 1.8rem; color: var(--text-dark); margin-bottom: 40px; display: block; line-height: 1.5; }
-        .modal-btn-group { display: flex; gap: 16px; justify-content: center; }
-        .modal-btn { padding: 20px 32px; border: none; border-radius: 20px; font-weight: 700; font-size: 1.4rem; cursor: pointer; flex: 1; font-family: inherit; }
+        .modal-content { background: #ffffff; border-radius: 26px; padding: 36px 28px; text-align: center; max-width: 330px; width: 85%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .modal-text { font-weight: 700; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 28px; display: block; line-height: 1.45; }
+        .modal-btn-group { display: flex; gap: 10px; justify-content: center; }
+        .modal-btn { padding: 15px 22px; border: none; border-radius: 14px; font-weight: 700; font-size: 1.05rem; cursor: pointer; flex: 1; font-family: inherit; }
         .modal-btn.confirm { background: var(--main-bg); color: #ffffff; }
         .modal-btn.cancel { background: #f2f4f6; color: var(--text-muted); }
     </style>
@@ -265,7 +258,7 @@
                     </div>
                     <div id="gb-list-container" class="gb-list"></div>
                     <div id="pagination" class="pagination"></div>
-                    <button class="main-btn" style="margin-top: 24px; width: 100%; padding: 20px; font-size:1.3rem;" onclick="resetTest()">다시하기</button>
+                    <button class="main-btn" style="margin-top: 16px; width: 100%; padding: 16px; font-size:1.05rem;" onclick="resetTest()">다시하기</button>
                 </div>
             </div>
         </div>
@@ -428,135 +421,4 @@
                         <span class="gb-msg">${data.message}</span>
                         <div class="gb-info-row">
                             <span class="gb-time">${timeStr}</span>
-                            <span class="gb-nick">| ${nickname}</span>
-                        </div>
-                    </div>`;
-                container.appendChild(item);
-            });
-            if (totalPages > 1) {
-                const prevBtn = document.createElement('button');
-                prevBtn.className = 'pg-btn'; prevBtn.innerText = '<';
-                prevBtn.disabled = currentPage === 1;
-                prevBtn.onclick = () => { currentPage--; renderGuestbook(); };
-                paginationContainer.appendChild(prevBtn);
-                for (let i = 1; i <= totalPages; i++) {
-                    const btn = document.createElement('button');
-                    btn.className = `pg-btn ${i === currentPage ? 'active' : ''}`;
-                    btn.innerText = i;
-                    btn.onclick = () => { currentPage = i; renderGuestbook(); };
-                    paginationContainer.appendChild(btn);
-                }
-                const nextBtn = document.createElement('button');
-                nextBtn.className = 'pg-btn'; nextBtn.innerText = '>';
-                nextBtn.disabled = currentPage === totalPages;
-                nextBtn.onclick = () => { currentPage++; renderGuestbook(); };
-                paginationContainer.appendChild(nextBtn);
-            }
-        }
-
-        window.handleSelect = async function(qId, optId) {
-            if (isProcessing) return;
-            isProcessing = true;
-            const currentButtons = document.querySelectorAll(`#page-${qId} .opt-btn`);
-            currentButtons.forEach(btn => btn.disabled = true);
-            userAnswers[optId]++;
-            answerHistory.push(optId); 
-            const statsRef = doc(db, "surveyStats", qId);
-            try {
-                await updateDoc(statsRef, { [optId.toUpperCase()]: increment(1) });
-                const snap = await getDoc(statsRef);
-                if (snap.exists()) {
-                    const data = snap.data();
-                    const total = (data.A||0)+(data.B||0)+(data.C||0);
-                    ['a','b','c'].forEach(o => {
-                        const count = data[o.toUpperCase()] || 0;
-                        const p = total > 0 ? Math.round((count/total)*100) : 0;
-                        const fillBar = document.getElementById(`bar-${qId}-${o}`);
-                        if(fillBar) fillBar.style.width = p + "%";
-                        const textSpan = document.getElementById(`text-${qId}-${o}`);
-                        if(textSpan) textSpan.innerText = p + "%";
-                    });
-                }
-                setTimeout(() => {
-                    if (qId === 'q1') nextPage('q2');
-                    else if (qId === 'q2') nextPage('q3');
-                    else if (qId === 'q3') nextPage('q4');
-                    else if (qId === 'q4') startVideoSequence();
-                }, 1000);
-            } catch (e) { console.error(e); isProcessing = false; }
-        };
-
-        async function startVideoSequence() {
-            const { a, b, c } = userAnswers;
-            const maxVal = Math.max(a, b, c);
-            const candidates = [];
-            if (a === maxVal) candidates.push('a');
-            if (b === maxVal) candidates.push('b');
-            if (c === maxVal) candidates.push('c');
-            let finalType = (candidates.length === 1) ? candidates[0] : answerHistory.slice().reverse().find(ans => candidates.includes(ans));
-            nextPage('video'); 
-            const videoEl = document.getElementById('loading-video');
-            if(!videoEl) return;
-            if (finalType === 'a') videoEl.src = "Video Project 1.mp4";
-            else if (finalType === 'b') videoEl.src = "Video Project 2.mp4";
-            else videoEl.src = "Video Project 3.mp4";
-            videoEl.load();
-            const playPromise = videoEl.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {}).catch(error => {
-                    console.log("자동재생 제한 예외 처리 차단:", error);
-                    calculateResult(); 
-                });
-            }
-            videoEl.onended = () => { 
-                videoEl.pause();
-                videoEl.src = "";
-                videoEl.load();
-                calculateResult(); 
-            };
-        }
-
-        async function calculateResult() {
-            nextPage('result');
-            const { a, b, c } = userAnswers;
-            const maxVal = Math.max(a, b, c);
-            const candidates = [];
-            if (a === maxVal) candidates.push('a');
-            if (b === maxVal) candidates.push('b');
-            if (c === maxVal) candidates.push('c');
-            let finalType = (candidates.length === 1) ? candidates[0] : answerHistory.slice().reverse().find(ans => candidates.includes(ans));
-            
-            const nameEl = document.getElementById('result-name');
-            const tagEl = document.getElementById('result-tag');
-            const descEl = document.getElementById('result-desc');
-            const cardEl = document.getElementById('result-card');
-
-            if (finalType === 'a') { 
-                nameEl.innerText = "KRU"; cardEl.src = "card1.png"; tagEl.innerText = "공감적 소비"; 
-                descEl.innerText = "함께 나누는 경험과 소속감에서 찾는 가치"; currentResultHead = "head1.png"; 
-            } else if (finalType === 'b') { 
-                nameEl.innerText = "MAX"; cardEl.src = "card2.png"; tagEl.innerText = "선구적 소비"; 
-                descEl.innerText = "남들보다 빠른 경험과 희소성에서 찾는 가치"; currentResultHead = "head2.png"; 
-            } else { 
-                nameEl.innerText = "HUGO"; cardEl.src = "card3.png"; tagEl.innerText = "주체적 소비"; 
-                descEl.innerText = "타인의 시선보다 나만의 확고한 기준에서 찾는 가치"; currentResultHead = "head3.png"; 
-            }
-
-            try {
-                const q1Snap = await getDoc(doc(db, "surveyStats", "q1"));
-                if (q1Snap.exists()) {
-                    const d = q1Snap.data();
-                    const total = (d.A||0)+(d.B||0)+(d.C||0);
-                    document.getElementById('total-participation-text').innerText = `현재 ${total}명이 참여했습니다`;
-                    ['A','B','C'].forEach(id => {
-                        const count = d[id] || 0;
-                        const p = total > 0 ? Math.round((count/total)*100) : 0;
-                        document.getElementById(`bar-total-${id.toLowerCase()}`).style.width = p+"%";
-                        document.getElementById(`percent-total-${id.toLowerCase()}`).innerText = p+"%";
-                    });
-                }
-            } catch(e) { console.error("결과 스탯 수신 에러 우회:", e); }
-        }
-    </script>
-</body>
-</html>
+                            <span class="gb-nick">

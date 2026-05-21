@@ -73,7 +73,7 @@
         #page-start .main-logo { width: 100%; max-width: 320px; height: auto; margin-bottom: 24px; }
         #page-start p { font-weight: 700; font-size: 1.4rem; margin-bottom: 32px; color: #ffffff; }
 
-        /* 질문 페이지 */
+        /* 질문 페이지 및 logo3 밸런스 */
         #page-q1, #page-q2, #page-q3, #page-q4 { justify-content: center; }
         .sub-logo { width: 100%; max-width: 390px; height: auto; margin-bottom: 28px; filter: none; display: block; }
 
@@ -111,7 +111,7 @@
         #page-video p { font-weight: 700; font-size: 1.2rem; color: #ffffff; margin-top: 24px; }
         .result-video { width: 100%; max-width: 575px; border-radius: 24px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4)); }
 
-        /* 결과 화면 */
+        /* 결과 화면 중앙 정렬 */
         #page-result.active { overflow-y: auto; justify-content: center; padding: 20px 0; }
         .result-wrapper { width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
         
@@ -134,9 +134,9 @@
         .stat-bar-fill { height: 100%; background: var(--main-bg); border-radius: 10px; width: 0%; transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1); }
         .stat-percent { width: 45px; text-align: right; flex-shrink: 0; color: var(--main-bg); }
 
-        /* 게스트북 */
+        /* 게스트북 중앙 정렬 및 가로 핏 최적화 */
         #page-guestbook.active { overflow-y: auto; justify-content: center; padding: 16px 2px; }
-        .gb-container { width: 100%; max-width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+        .gb-container { width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
         .gb-title { font-weight: 700; font-size: 2.2rem; margin-bottom: 20px; display: block; color: #ffffff; text-align: left; width: 100%; padding: 0 2px; }
         
         .gb-input-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; width: 100%; }
@@ -146,11 +146,11 @@
         #gb-nickname-field { width: 95px; flex-shrink: 0; text-align: center; font-weight: 700; }
         #gb-input-field { flex-grow: 1; width: calc(100% - 107px); }
         
-        .gb-submit { background: var(--btn-bg-main); color: #ffffff; border: 2px solid rgba(255,255,255,0.3); padding: 18px 0; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1.1rem; width: 100%; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .gb-submit { background: var(--btn-bg-main); color: #ffffff; border: 2px solid rgba(255,255,255,0.3); padding: 18px 0; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1.1rem; width: 100%; transition: all 0.2s; }
         .gb-submit:active { transform: scale(0.98); background: #000; }
         
         .gb-list { list-style: none; padding: 0; margin: 0; width: 100%; }
-        .gb-item { background: var(--card-bg); padding: 16px 20px; border-radius: 20px; margin-bottom: 10px; display: flex; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; animation: fadeIn 0.4s ease forwards; opacity: 0; }
+        .gb-item { background: var(--card-bg); padding: 16px 20px; border-radius: 20px; margin-bottom: 10px; display: flex; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.1); animation: fadeIn 0.4s ease forwards; opacity: 0; }
         .gb-head-wrap { width: 44px; height: 44px; margin-right: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 12px; }
         .gb-head-img { width: 85%; height: 85%; object-fit: contain; }
         .gb-divider { width: 1px; height: 24px; background-color: #f2f4f6; margin-right: 14px; }
@@ -186,7 +186,7 @@
             <div id="page-q1" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 1 / 4</span><span>25%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 25%;"></div></div></div>
-                <h2>Q1. 사고 싶은 제품이 생기면 나는…</h2>
+                <h2>Q1. 사고 싶은 제품이 생기면 나는..</h2>
                 <button class="opt-btn" onclick="handleSelect('q1', 'a')"><span>A. 사람들의 반응이 궁금하다</span><div class="btn-fill" id="bar-q1-a"></div><span class="stat-text" id="text-q1-a"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q1', 'b')"><span>B. 남들보다 먼저 갖고 싶다</span><div class="btn-fill" id="bar-q1-b"></div><span class="stat-text" id="text-q1-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q1', 'c')"><span>C. 내 기준에 맞는지 생각한다</span><div class="btn-fill" id="bar-q1-c"></div><span class="stat-text" id="text-q1-c"></span></button>
@@ -195,7 +195,7 @@
             <div id="page-q2" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 2 / 4</span><span>50%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 50%;"></div></div></div>
-                <h2>Q2. 유행하는 디저트를 보면 나는…</h2>
+                <h2>Q2. 유행하는 디저트를 보면 나는..</h2>
                 <button class="opt-btn" onclick="handleSelect('q2', 'a')"><span>A. 자꾸 보이다 보니 먹고 싶어진다</span><div class="btn-fill" id="bar-q2-a"></div><span class="stat-text" id="text-q2-a"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q2', 'b')"><span>B. 바로 찾아서 먹어본다</span><div class="btn-fill" id="bar-q2-b"></div><span class="stat-text" id="text-q2-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q2', 'c')"><span>C. 내 취향 아니면 시도하지 않는다</span><div class="btn-fill" id="bar-q2-c"></div><span class="stat-text" id="text-q2-c"></span></button>
@@ -204,7 +204,7 @@
             <div id="page-q3" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 3 / 4</span><span>75%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 75%;"></div></div></div>
-                <h2>Q3. 새로운 음악을 접할 때 나는…</h2>
+                <h2>Q3. 새로운 음악을 접할 때 나는..</h2>
                 <button class="opt-btn" onclick="handleSelect('q3', 'a')"><span>A. 플리나 SNS 보다가 발견한 노래를 듣곤한다</span><div class="btn-fill" id="bar-q3-a"></div><span class="stat-text" id="text-q3-a"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q3', 'b')"><span>B. 좋아하는 아티스트의 신곡이 나오는대로 들어본다</span><div class="btn-fill" id="bar-q3-b"></div><span class="stat-text" id="text-q3-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q3', 'c')"><span>C. 내 취향껏 좋아하는 분야를 디깅해서 듣는다</span><div class="btn-fill" id="bar-q3-c"></div><span class="stat-text" id="text-q3-c"></span></button>
@@ -221,7 +221,7 @@
 
             <div id="page-video" class="page">
                 <video id="loading-video" class="result-video" playsinline muted></video>
-                <p>결과 분석 중...</p>
+                <p>결과 분석 중..</p>
             </div>
 
             <div id="page-result" class="page">
@@ -250,7 +250,7 @@
                     <span class="gb-title">GUESTBOOK</span>
                     <div class="gb-input-box">
                         <div class="gb-input-row">
-                            <input type="text" id="gb-nickname-field" class="gb-input" placeholder="이름" maxlength="5">
+                            <input type="text" id="gb-nickname-field" class="gb-input" placeholder="성함" maxlength="5">
                             <input type="text" id="gb-input-field" class="gb-input" placeholder="방명록을 남겨주세요.(최대 50자)" maxlength="50">
                         </div>
                         <button class="gb-submit" onclick="showModal('submit')">전송</button>
@@ -354,7 +354,7 @@
 
             if(mode === 'submit') {
                 if(!nickname || !msg) {
-                    modalMsg.innerHTML = "이름과 메시지를<br>모두 입력해주세요.";
+                    modalMsg.innerHTML = "성함과 메시지를<br>모두 입력해주세요.";
                     cancelBtn.style.display = "none";
                     currentModalMode = "alert";
                 } else {
@@ -472,7 +472,6 @@
                     });
                 }
                 setTimeout(() => {
-                    // [버그 수정 완료] 다음 qId 바인딩 넘버링 매칭 보완
                     if (qId === 'q1') nextPage('q2');
                     else if (qId === 'q2') nextPage('q3');
                     else if (qId === 'q3') nextPage('q4');
@@ -526,14 +525,15 @@
             const descEl = document.getElementById('result-desc');
             const cardEl = document.getElementById('result-card');
 
+            // [수정 완료] 페르소나 태그 및 설명 텍스트 업데이트
             if (finalType === 'a') { 
-                nameEl.innerText = "KRU"; cardEl.src = "card1.png"; tagEl.innerText = "공감적 소비"; 
+                nameEl.innerText = "KRU"; cardEl.src = "card1.png"; tagEl.innerText = "공감적 페르소나"; 
                 descEl.innerText = "함께 나누는 경험과 소속감에서 찾는 가치"; currentResultHead = "head1.png"; 
             } else if (finalType === 'b') { 
-                nameEl.innerText = "MAX"; cardEl.src = "card2.png"; tagEl.innerText = "선구적 소비"; 
+                nameEl.innerText = "MAX"; cardEl.src = "card2.png"; tagEl.innerText = "선구적 페르소나"; 
                 descEl.innerText = "남들보다 빠른 경험과 희소성에서 찾는 가치"; currentResultHead = "head2.png"; 
             } else { 
-                nameEl.innerText = "HUGO"; cardEl.src = "card3.png"; tagEl.innerText = "주체적 소비"; 
+                nameEl.innerText = "HUGO"; cardEl.src = "card3.png"; tagEl.innerText = "주관적 페르소나"; 
                 descEl.innerText = "타인의 시선보다 나만의 확고한 기준에서 찾는 가치"; currentResultHead = "head3.png"; 
             }
 

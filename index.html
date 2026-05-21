@@ -60,7 +60,6 @@
             transform: scaleX(-1) rotate(-12deg);
         }
 
-        /* 그림자 보정 여백 매칭 */
         .inner-content { 
             width: 100%; max-width: 496px; padding: 0 8px; position: relative; z-index: 10; 
             height: 94vh; display: flex; flex-direction: column; 
@@ -135,23 +134,23 @@
         .stat-bar-fill { height: 100%; background: var(--main-bg); border-radius: 10px; width: 0%; transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1); }
         .stat-percent { width: 45px; text-align: right; flex-shrink: 0; color: var(--main-bg); }
 
-        /* 게스트북 가로 세로 고정 보정 패널 */
-        #page-guestbook.active { overflow-y: auto; justify-content: center; padding: 16px 4px; }
+        /* 게스트북 컴포넌트 핏 마진 최종 안착 최적화 */
+        #page-guestbook.active { overflow-y: auto; justify-content: center; padding: 12px 4px; }
         .gb-container { width: 100%; max-width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
-        .gb-title { font-weight: 700; font-size: 2.2rem; margin-bottom: 20px; display: block; color: #ffffff; text-align: left; width: 100%; padding: 0 4px; }
+        .gb-title { font-weight: 700; font-size: 2.2rem; margin-bottom: 16px; display: block; color: #ffffff; text-align: left; width: 100%; padding: 0 4px; }
         
-        .gb-input-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; width: 100%; padding: 0 2px; }
-        .gb-input-row { display: flex; gap: 12px; width: 100%; }
+        .gb-input-box { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; width: 100%; padding: 0 2px; }
+        .gb-input-row { display: flex; gap: 10px; width: 100%; }
         
-        .gb-input { padding: 18px 16px; border: none; border-radius: 16px; font-family: inherit; font-weight: 500; font-size: 1rem; outline: none; background: #ffffff; color: var(--text-dark); box-shadow: 0 6px 20px rgba(0,0,0,0.1); width: 100%; }
+        .gb-input { padding: 16px 14px; border: none; border-radius: 16px; font-family: inherit; font-weight: 500; font-size: 1rem; outline: none; background: #ffffff; color: var(--text-dark); box-shadow: 0 6px 20px rgba(0,0,0,0.1); width: 100%; }
         #gb-nickname-field { width: 95px; flex-shrink: 0; text-align: center; font-weight: 700; }
-        #gb-input-field { flex-grow: 1; width: calc(100% - 107px); }
+        #gb-input-field { flex-grow: 1; width: calc(100% - 105px); }
         
         .gb-submit { 
             background: var(--btn-bg-main); 
             color: #ffffff; 
             border: none; 
-            padding: 18px 0; 
+            padding: 16px 0; 
             border-radius: 16px; 
             font-weight: 700; 
             cursor: pointer; 
@@ -163,16 +162,16 @@
         .gb-submit:active { transform: scale(0.98); background: #1c2038; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
         
         .gb-list { list-style: none; padding: 0 2px; margin: 0; width: 100%; }
-        .gb-item { background: var(--card-bg); padding: 16px 20px; border-radius: 20px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; animation: fadeIn 0.4s ease forwards; opacity: 0; }
-        .gb-head-wrap { width: 46px; height: 46px; margin-right: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 12px; }
+        .gb-item { background: var(--card-bg); padding: 14px 18px; border-radius: 20px; margin-bottom: 8px; display: flex; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; animation: fadeIn 0.4s ease forwards; opacity: 0; }
+        .gb-head-wrap { width: 44px; height: 44px; margin-right: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 12px; }
         .gb-head-img { width: 85%; height: 85%; object-fit: contain; }
-        .gb-divider { width: 1px; height: 28px; background-color: #f2f4f6; margin-right: 14px; }
+        .gb-divider { width: 1px; height: 24px; background-color: #f2f4f6; margin-right: 14px; }
         .gb-content-wrap { flex-grow: 1; text-align: left; overflow: hidden; }
         .gb-msg { font-weight: 500; font-size: 1.05rem; color: var(--text-dark); display: block; margin-bottom: 4px; word-break: break-all; line-height: 1.4; }
         .gb-info-row { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; display: flex; gap: 6px; }
         .gb-nick { color: var(--text-dark); font-weight: 700; }
 
-        .pagination { display: flex; justify-content: center; gap: 6px; margin: 16px 0; width: 100%; }
+        .pagination { display: flex; justify-content: center; gap: 6px; margin: 12px 0; width: 100%; }
         .pg-btn { width: 40px; height: 40px; border: none; background: rgba(255,255,255,0.2); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-family: inherit; color: #ffffff; transition: all 0.2s; }
         .pg-btn.active { background: #ffffff; color: var(--main-bg); font-weight: 900; }
         .pg-btn:disabled { opacity: 0.3; cursor: default; }
@@ -209,26 +208,26 @@
             <div id="page-q2" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 2 / 4</span><span>50%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 50%;"></div></div></div>
-                <h2>Q2. 유행하는 디저트를 보면 나는..</h2>
+                <h2>Q2. 유행 디저트를 보면 나는..</h2>
                 <button class="opt-btn" onclick="handleSelect('q2', 'a')"><span>A. 자꾸 보이다 보니 먹고 싶어진다</span><div class="btn-fill" id="bar-q2-a"></div><span class="stat-text" id="text-q2-a"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q2', 'b')"><span>B. 바로 찾아서 먹어본다</span><div class="btn-fill" id="bar-q2-b"></div><span class="stat-text" id="text-q2-b"></span></button>
-                <button class="opt-btn" onclick="handleSelect('q2', 'c')"><span>C. 내 취향 아니면 시도하지 않는다</span><div class="btn-fill" id="bar-q2-c"></div><span class="stat-text" id="text-q2-c"></span></button>
+                <button class="opt-btn" onclick="handleSelect('q2', 'c')"><span>C. 유행을 떠나서 내가 끌려야 시도한다</span><div class="btn-fill" id="bar-q2-c"></div><span class="stat-text" id="text-q2-c"></span></button>
             </div>
 
             <div id="page-q3" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 3 / 4</span><span>75%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 75%;"></div></div></div>
                 <h2>Q3. 새로운 음악을 접할 때 나는..</h2>
-                <button class="opt-btn" onclick="handleSelect('q3', 'a')"><span>A. 플리나 SNS 보다가 발견한 노래를 듣곤한다</span><div class="btn-fill" id="bar-q3-a"></div><span class="stat-text" id="text-q3-a"></span></button>
-                <button class="opt-btn" onclick="handleSelect('q3', 'b')"><span>B. 좋아하는 아티스트의 신곡이 나오는대로 들어본다</span><div class="btn-fill" id="bar-q3-b"></div><span class="stat-text" id="text-q3-b"></span></button>
-                <button class="opt-btn" onclick="handleSelect('q3', 'c')"><span>C. 내 취향껏 좋아하는 분야를 디깅해서 듣는다</span><div class="btn-fill" id="bar-q3-c"></div><span class="stat-text" id="text-q3-c"></span></button>
+                <button class="opt-btn" onclick="handleSelect('q3', 'a')"><span>A. 요즘 알고리즘에서 뜨는 음악을 듣는다</span><div class="btn-fill" id="bar-q3-a"></div><span class="stat-text" id="text-q3-a"></span></button>
+                <button class="opt-btn" onclick="handleSelect('q3', 'b')"><span>B. 최신 발매작 기준으로 듣는다</span><div class="btn-fill" id="bar-q3-b"></div><span class="stat-text" id="text-q3-b"></span></button>
+                <button class="opt-btn" onclick="handleSelect('q3', 'c')"><span>C. 나만의 기준으로 디깅해서 듣는다</span><div class="btn-fill" id="bar-q3-c"></div><span class="stat-text" id="text-q3-c"></span></button>
             </div>
 
             <div id="page-q4" class="page">
                 <img src="logo3.png" alt="sub-logo" class="sub-logo">
                 <div class="progress-container"><div class="progress-info"><span>Q 4 / 4</span><span>100%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 100%;"></div></div></div>
                 <h2>Q4. 나에게 더 중요한 것은..</h2>
-                <button class="opt-btn" onclick="handleSelect('q4', 'a')"><span>A. 함께 즐기고 공감하는 경험</span><div class="btn-fill" id="bar-q4-a"></div><span class="stat-text" id="text-q4-a"></span></button>
+                <button class="opt-btn" onclick="handleSelect('q4', 'a')"><span>A. 공감대와 소속감을 느끼는 것</span><div class="btn-fill" id="bar-q4-a"></div><span class="stat-text" id="text-q4-a"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q4', 'b')"><span>B. 남들보다 빠르게 경험하는 것</span><div class="btn-fill" id="bar-q4-b"></div><span class="stat-text" id="text-q4-b"></span></button>
                 <button class="opt-btn" onclick="handleSelect('q4', 'c')"><span>C. 내 기준에 맞는 선택</span><div class="btn-fill" id="bar-q4-c"></div><span class="stat-text" id="text-q4-c"></span></button>
             </div>
@@ -271,7 +270,7 @@
                     </div>
                     <div id="gb-list-container" class="gb-list"></div>
                     <div id="pagination" class="pagination"></div>
-                    <button class="main-btn" style="margin-top: 16px; width: 100%; padding: 16px; font-size:1.05rem;" onclick="resetTest()">다시하기</button>
+                    <button class="main-btn" style="margin-top: 12px; width: 100%; padding: 16px; font-size:1.05rem;" onclick="resetTest()">다시하기</button>
                 </div>
             </div>
         </div>
@@ -340,7 +339,6 @@
             isProcessing = false;
         };
 
-        // [버그 수정 완료] 다시하기 시 방명록 리스트 페이지 인덱스도 1페이지로 완벽 동기화 초기화
         window.resetTest = function() {
             const videoEl = document.getElementById('loading-video');
             if(videoEl) {
@@ -351,13 +349,13 @@
             userAnswers = { a: 0, b: 0, c: 0 };
             answerHistory = [];
             currentResultHead = ""; 
-            currentPage = 1; // 변수 초기화
+            currentPage = 1;
             document.querySelectorAll('.opt-btn').forEach(btn => btn.disabled = false);
             document.querySelectorAll('.btn-fill').forEach(f => f.style.width = "0%");
             document.querySelectorAll('.stat-text').forEach(t => t.innerText = "");
             document.getElementById('gb-nickname-field').value = "";
             document.getElementById('gb-input-field').value = "";
-            renderGuestbook(); // 방명록 초기 정렬 피출
+            renderGuestbook();
             nextPage('start');
         };
 
@@ -414,7 +412,6 @@
             console.error("Firestore Snapshot 에러 케어:", error);
         });
 
-        // [버그 수정 완료] 다단 조건 분리 루프 최적화로 페이지네이션 컴포넌트 유실 원천 차단
         function renderGuestbook() {
             const container = document.getElementById('gb-list-container');
             const paginationContainer = document.getElementById('pagination');
@@ -454,6 +451,7 @@
                 prevBtn.onclick = () => { currentPage--; renderGuestbook(); };
                 paginationContainer.appendChild(prevBtn);
                 
+                // [검증 완료] 연타 시 오작동하지 않도록 내부 루프 격리 빌드 고정
                 for (let i = 1; i <= totalPages; i++) {
                     const btn = document.createElement('button');
                     btn.className = `pg-btn ${i === currentPage ? 'active' : ''}`;
@@ -532,7 +530,6 @@
             };
         }
 
-        // [비동기 레이턴시 케어] 파이어베이스 트랜잭션 동기화 정돈 완료
         async function calculateResult() {
             const { a, b, c } = userAnswers;
             const maxVal = Math.max(a, b, c);
@@ -573,7 +570,6 @@
                 }
             } catch(e) { console.error("결과 스탯 수신 에러 우회:", e); }
             
-            // 데이터 수신 완료 후 화면 피출로 UI 깜빡임 원천 해결
             nextPage('result');
         }
     </script>

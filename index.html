@@ -1,194 +1,1153 @@
 <!DOCTYPE html>
+
 <html lang="ko">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>HYPE BEAST TYPE TEST</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+
     
+
     <style>
+
         :root {
+
             --main-bg: #4453a4; 
+
             --bar-gauge: rgba(35, 41, 72, 0.15); 
+
             --progress-fill: #232948;
+
             --progress-bg: rgba(255, 255, 255, 0.25);
+
             --btn-bg-main: #232948;
+
             --btn-text-main: #ffffff;
+
             --card-bg: #ffffff;
+
             --window-bg: #000000; 
+
             --text-dark: #191f28;
+
             --text-muted: #8b95a1;
+
         }
 
+
+
         /* --- 애니메이션 Keyframes --- */
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+
+
         body { 
+
             background-color: var(--window-bg); margin: 0; padding: 0; 
+
             display: flex; justify-content: center; align-items: center; 
+
             height: 100vh; overflow: hidden; font-family: 'Noto Sans KR', sans-serif; 
+
             -webkit-font-smoothing: antialiased; 
+
         }
+
         
+
         #main-container { 
+
             width: 100vw; height: 100vh; background-color: var(--main-bg); 
+
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
+
             padding: 24px; position: relative; overflow: hidden; 
+
         }
+
+
 
         /* 배경 시그니처 로고 */
+
         #main-container::before { 
+
             content: ""; position: absolute; bottom: -100px; right: -150px; 
+
             width: 900px; height: 900px; background-image: url('logo2.png'); background-size: contain; 
+
             background-repeat: no-repeat; background-position: center; 
+
             filter: brightness(0) saturate(100%) invert(15%) sepia(20%) saturate(1500%) hue-rotate(200deg);
+
             opacity: 0.5; z-index: 0; pointer-events: none; 
+
             transform: rotate(12deg);
+
         }
+
+
 
         #main-container::after { 
+
             content: ""; position: absolute; top: -100px; left: -200px; 
+
             width: 900px; height: 900px; background-image: url('logo2.png'); background-size: contain; 
+
             background-repeat: no-repeat; background-position: center; 
+
             filter: brightness(0) saturate(100%) invert(15%) sepia(20%) saturate(1500%) hue-rotate(200deg);
+
             opacity: 0.5; z-index: 0; pointer-events: none; 
+
             transform: scaleX(-1) rotate(-12deg);
+
         }
+
+
 
         .inner-content { 
+
             width: 100%; max-width: 496px; padding: 0 8px; position: relative; z-index: 10; 
+
             height: 94vh; display: flex; flex-direction: column; 
+
         }
+
         
+
         .page { display: none; flex-direction: column; align-items: center; width: 100%; height: 100%; }
+
         .page.active { display: flex; text-align: center; animation: fadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 
+
+
         /* 시작 페이지 */
+
         #page-start { justify-content: center; }
+
         #page-start .main-logo { width: 100%; max-width: 320px; height: auto; margin-bottom: 24px; }
+
         #page-start p { font-weight: 700; font-size: 1.4rem; margin-bottom: 32px; color: #ffffff; }
 
+
+
         /* 질문 페이지 */
+
         #page-q1, #page-q2, #page-q3, #page-q4 { justify-content: center; }
+
         .sub-logo { width: 100%; max-width: 390px; height: auto; margin-bottom: 28px; filter: none; display: block; }
 
+
+
         .progress-container { width: 100%; margin-bottom: 36px; }
+
         .progress-info { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; color: rgba(255,255,255,0.9); }
+
         .main-progress-bg { width: 100%; height: 6px; background-color: var(--progress-bg); border-radius: 10px; overflow: hidden; }
+
         .main-progress-fill { height: 100%; background-color: var(--progress-fill); border-radius: 10px; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+
 
         h2 { font-weight: 700; font-size: 1.7rem; text-align: left; margin: 0 0 32px 0; letter-spacing: -0.03em; color: #ffffff; line-height: 1.4; word-break: keep-all; }
 
+
+
         .opt-btn { 
+
             width: 100%; position: relative; background: var(--card-bg); border: none; 
+
             padding: 20px 24px; margin-bottom: 14px; font-size: 1.05rem; cursor: pointer; 
+
             display: flex; justify-content: space-between; align-items: center; z-index: 20; 
+
             overflow: hidden; font-family: 'Noto Sans KR', sans-serif; color: var(--text-dark); 
+
             font-weight: 500; border-radius: 20px; text-align: left; 
+
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); transition: transform 0.2s, box-shadow 0.2s; 
+
         }
+
         .opt-btn span { position: relative; z-index: 2; line-height: 1.4; }
+
         .opt-btn:active { transform: scale(0.97); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+
         
+
         .btn-fill { position: absolute; top: 0; left: 0; bottom: 0; width: 0%; background-color: var(--bar-gauge); z-index: 1; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+
         .stat-text { font-weight: 700; font-size: 1.05rem; pointer-events: none; margin-left: 12px; flex-shrink: 0; position: relative; z-index: 2; color: var(--main-bg); }
 
+
+
         .main-btn { 
+
             padding: 18px 48px; background: var(--btn-bg-main); color: var(--btn-text-main); 
+
             border: none; font-size: 1.15rem; font-weight: 700; cursor: pointer; 
+
             border-radius: 24px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2); 
+
             transition: transform 0.2s, box-shadow 0.2s; 
+
         }
+
         .main-btn:active { transform: scale(0.96); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
 
+
+
         /* 결과 분석 비디오 페이지 */
+
         #page-video { justify-content: center; align-items: center; }
+
         #page-video p { font-weight: 700; font-size: 1.2rem; color: #ffffff; margin-top: 24px; }
+
         .result-video { width: 100%; max-width: 575px; border-radius: 24px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4)); }
 
+
+
         /* 결과 화면 */
+
         #page-result.active { overflow-y: auto; justify-content: center; padding: 20px 0; }
+
         .result-wrapper { width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+
         
+
         .result-header { width: 100%; text-align: left; margin-bottom: 12px; }
+
         .result-category { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); display: block; margin-bottom: 4px; }
+
         .result-name { font-weight: 900; font-size: 3.6rem; line-height: 1; margin: 0; color: #ffffff; }
+
         
+
         .card-img-wrap { width: 100%; max-width: 460px; margin: 16px auto; filter: drop-shadow(0 16px 36px rgba(0,0,0,0.3)); }
+
         .card-img { width: 100%; height: auto; border-radius: 24px; display: block; }
+
         
+
         #result-tag-container { width: 100%; text-align: left; background: var(--card-bg); border-radius: 24px; padding: 24px; margin-bottom: 20px; box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+
         #result-tag { font-weight: 900; font-size: 1.4rem; color: var(--main-bg); border-bottom: 3px solid #f2f4f6; display: inline-block; padding-bottom: 6px; margin-bottom: 14px; }
+
         #result-desc { font-weight: 500; font-size: 1rem; color: var(--text-dark); display: block; line-height: 1.55; word-break: keep-all; }
 
+
+
         .total-stats { margin-bottom: 24px; padding: 24px; background: var(--card-bg); border-radius: 24px; width: 100%; box-sizing: border-box; box-shadow: 0 12px 32px rgba(0,0,0,0.15); text-align: left; }
+
         .stat-header { font-weight: 700; font-size: 1.1rem; color: var(--text-dark); display: block; border-bottom: 1px solid #f2f4f6; padding-bottom: 12px; margin-bottom: 18px; }
+
         .stat-row { display: flex; align-items: center; margin-bottom: 16px; font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
+
         .stat-name { width: 50px; flex-shrink: 0; color: var(--text-muted); } 
+
         .stat-bar-bg { flex-grow: 1; height: 10px; background: #f2f4f6; border-radius: 10px; margin: 0 14px; overflow: hidden; }
+
         .stat-bar-fill { height: 100%; background: var(--main-bg); border-radius: 10px; width: 0%; transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1); }
+
         .stat-percent { width: 45px; text-align: right; flex-shrink: 0; color: var(--main-bg); }
 
+
+
         /* 게스트북 컴포넌트 핏 마진 최종 안착 최적화 */
+
         #page-guestbook.active { overflow-y: auto; justify-content: center; padding: 12px 4px; }
+
         .gb-container { width: 100%; max-width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+
         .gb-title { font-weight: 700; font-size: 2.2rem; margin-bottom: 16px; display: block; color: #ffffff; text-align: left; width: 100%; padding: 0 4px; }
+
         
+
         .gb-input-box { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; width: 100%; padding: 0 2px; }
+
         .gb-input-row { display: flex; gap: 10px; width: 100%; }
+
         
+
         .gb-input { padding: 16px 14px; border: none; border-radius: 16px; font-family: inherit; font-weight: 500; font-size: 1rem; outline: none; background: #ffffff; color: var(--text-dark); box-shadow: 0 6px 20px rgba(0,0,0,0.1); width: 100%; }
+
         #gb-nickname-field { width: 95px; flex-shrink: 0; text-align: center; font-weight: 700; }
+
         #gb-input-field { flex-grow: 1; width: calc(100% - 105px); }
+
         
+
         .gb-submit { 
+
             background: var(--btn-bg-main); 
+
             color: #ffffff; 
+
             border: none; 
+
             padding: 16px 0; 
+
             border-radius: 16px; 
+
             font-weight: 700; 
+
             cursor: pointer; 
+
             font-size: 1.1rem; 
+
             width: 100%; 
+
             box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2); 
+
             transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s; 
+
         }
+
         .gb-submit:active { transform: scale(0.98); background: #1c2038; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+
         
+
         .gb-list { list-style: none; padding: 0 2px; margin: 0; width: 100%; }
+
         .gb-item { background: var(--card-bg); padding: 14px 18px; border-radius: 20px; margin-bottom: 8px; display: flex; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; animation: fadeIn 0.4s ease forwards; opacity: 0; }
+
         .gb-head-wrap { width: 44px; height: 44px; margin-right: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 12px; }
+
         .gb-head-img { width: 85%; height: 85%; object-fit: contain; }
+
         .gb-divider { width: 1px; height: 24px; background-color: #f2f4f6; margin-right: 14px; }
+
         .gb-content-wrap { flex-grow: 1; text-align: left; overflow: hidden; }
+
         .gb-msg { font-weight: 500; font-size: 1.05rem; color: var(--text-dark); display: block; margin-bottom: 4px; word-break: break-all; line-height: 1.4; }
+
         .gb-info-row { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; display: flex; gap: 6px; }
+
         .gb-nick { color: var(--text-dark); font-weight: 700; }
 
+
+
         .pagination { display: flex; justify-content: center; gap: 6px; margin: 12px 0; width: 100%; }
+
         .pg-btn { width: 40px; height: 40px; border: none; background: rgba(255,255,255,0.2); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-family: inherit; color: #ffffff; transition: all 0.2s; }
+
         .pg-btn.active { background: #ffffff; color: var(--main-bg); font-weight: 900; }
+
         .pg-btn:disabled { opacity: 0.3; cursor: default; }
 
+
+
         #custom-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+
         .modal-content { background: #ffffff; border-radius: 26px; padding: 36px 28px; text-align: center; max-width: 330px; width: 85%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
         .modal-text { font-weight: 700; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 28px; display: block; line-height: 1.45; }
+
         .modal-btn-group { display: flex; gap: 10px; justify-content: center; }
+
         .modal-btn { padding: 15px 22px; border: none; border-radius: 14px; font-weight: 700; font-size: 1.05rem; cursor: pointer; flex: 1; font-family: inherit; }
+
         .modal-btn.confirm { background: var(--main-bg); color: #ffffff; }
+
         .modal-btn.cancel { background: #f2f4f6; color: var(--text-muted); }
+
     </style>
+
 </head>
+
 <body>
 
+
+
     <div id="main-container">
+
         <div class="inner-content">
+
             
+
             <div id="page-start" class="page active">
+
                 <img src="logo.png" alt="Logo" class="main-logo">
+
+                <p>나의 하입비스트 유형 찾기</p>
+
+                <button class="main-btn" onclick="nextPage('q1')">시작하기</button>
+
+            </div>
+
+
+
+            <div id="page-q1" class="page">
+
+                <img src="logo3.png" alt="sub-logo" class="sub-logo">
+
+                <div class="progress-container"><div class="progress-info"><span>Q 1 / 4</span><span>25%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 25%;"></div></div></div>
+
+                <h2>Q1. 사고 싶은 제품이 생기면 나는..</h2>
+
+                <button class="opt-btn" onclick="handleSelect('q1', 'a')"><span>A. 사람들의 반응이 궁금하다</span><div class="btn-fill" id="bar-q1-a"></div><span class="stat-text" id="text-q1-a"></span></button>
+
+                <button class="opt-btn" onclick="handleSelect('q1', 'b')"><span>B. 남들보다 먼저 갖고 싶다</span><div class="btn-fill" id="bar-q1-b"></div><span class="stat-text" id="text-q1-b"></span></button>
+
+                <button class="opt-btn" onclick="handleSelect('q1', 'c')"><span>C. 내 기준에 맞는지 생각한다</span><div class="btn-fill" id="bar-q1-c"></div><span class="stat-text" id="text-q1-c"></span></button>
+
+            </div>
+
+
+
+            <div id="page-q2" class="page">
+
+                <img src="logo3.png" alt="sub-logo" class="sub-logo">
+
+                <div class="progress-container"><div class="progress-info"><span>Q 2 / 4</span><span>50%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 50%;"></div></div></div>
+
+                <h2>Q2. 유행 디저트를 보면 나는..</h2>
+
+                <button class="opt-btn" onclick="handleSelect('q2', 'a')"><span>A. 자꾸 보이다 보니 먹고 싶어진다</span><div class="btn-fill" id="bar-q2-a"></div><span class="stat-text" id="text-q2-a"></span></button>
+
+                <button class="opt-btn" onclick="handleSelect('q2', 'b')"><span>B. 바로 찾아서 먹어본다</span><div class="btn-fill" id="bar-q2-b"></div><span class="stat-text" id="text-q2-b"></span></button>
+
+                <button class="opt-btn" onclick="handleSelect('q2', 'c')"><span>C. 유행을 떠나서 내가 끌려야 시도한다</span><div class="btn-fill" id="bar-q2-c"></div><span class="stat-text" id="text-q2-c"></span></button>
+
+            </div>
+
+
+
+            <div id="page-q3" class="page">
+
+                <img src="logo3.png" alt="sub-logo" class="sub-logo">
+
+                <div class="progress-container"><div class="progress-info"><span>Q 3 / 4</span><span>75%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 75%;"></div></div></div>
+
+                <h2>Q3. 새로운 음악을 접할 때 나는..</h2>
+
+                <button class="opt-btn" onclick="handleSelect('q3', 'a')"><span>A. 요즘 알고리즘에서 뜨는 음악을 듣는다</span><div class="btn-fill" id="bar-q3-a"></div><span class="stat-text" id="text-q3-a"></span></button>
+
+                <button class="opt-btn" onclick="handleSelect('q3', 'b')"><span>B. 최신 발매작 기준으로 듣는다</span><div class="btn-fill" id="bar-q3-b"></div><span class="stat-text" id="text-q3-b"></span></button>
+
+                <button class="opt-btn" onclick="handleSelect('q3', 'c')"><span>C. 나만의 기준으로 디깅해서 듣는다</span><div class="btn-fill" id="bar-q3-c"></div><span class="stat-text" id="text-q3-c"></span></button>
+
+            </div>
+
+
+
+            <div id="page-q4" class="page">
+
+                <img src="logo3.png" alt="sub-logo" class="sub-logo">
+
+                <div class="progress-container"><div class="progress-info"><span>Q 4 / 4</span><span>100%</span></div><div class="main-progress-bg"><div class="main-progress-fill" style="width: 100%;"></div></div></div>
+
+                <h2>Q4. 나에게 더 중요한 것은..</h2>
+
+                <button class="opt-btn" onclick="handleSelect('q4', 'a')"><span>A. 공감대와 소속감을 느끼는 것</span><div class="btn-fill" id="bar-q4-a"></div><span class="stat-text" id="text-q4-a"></span></button>
+
+                <button class="opt-btn" onclick="handleSelect('q4', 'b')"><span>B. 남들보다 빠르게 경험하는 것</span><div class="btn-fill" id="bar-q4-b"></div><span class="stat-text" id="text-q4-b"></span></button>
+
+                <button class="opt-btn" onclick="handleSelect('q4', 'c')"><span>C. 내 기준에 맞는 선택</span><div class="btn-fill" id="bar-q4-c"></div><span class="stat-text" id="text-q4-c"></span></button>
+
+            </div>
+
+
+
+            <div id="page-video" class="page">
+
+                <video id="loading-video" class="result-video" playsinline muted></video>
+
+                <p>결과 분석 중..</p>
+
+            </div>
+
+
+
+            <div id="page-result" class="page">
+
+                <div class="result-wrapper">
+
+                    <div class="result-header">
+
+                        <span class="result-category">CHARACTER TYPE</span>
+
+                        <h1 id="result-name" class="result-name">NAME</h1>
+
+                    </div>
+
+                    <div class="card-img-wrap"><img src="" alt="ID Card" id="result-card" class="card-img"></div>
+
+                    <div id="result-tag-container">
+
+                        <div id="result-tag">태그</div>
+
+                        <div id="result-desc">설명</div>
+
+                    </div>
+
+                    <div class="total-stats">
+
+                        <span class="stat-header" id="total-participation-text">현재 0명이 참여했습니다</span>
+
+                        <div class="stat-row"><span class="stat-name">KRU</span><div class="stat-bar-bg"><div id="bar-total-a" class="stat-bar-fill"></div></div><span id="percent-total-a" class="stat-percent">0%</span></div>
+
+                        <div class="stat-row"><span class="stat-name">MAX</span><div class="stat-bar-bg"><div id="bar-total-b" class="stat-bar-fill"></div></div><span id="percent-total-b" class="stat-percent">0%</span></div>
+
+                        <div class="stat-row"><span class="stat-name">HUGO</span><div class="stat-bar-bg"><div id="bar-total-c" class="stat-bar-fill"></div></div><span id="percent-total-c" class="stat-percent">0%</span></div>
+
+                    </div>
+
+                    <button class="main-btn" style="width:100%; margin-bottom: 24px;" onclick="nextPage('guestbook')">방명록 남기기</button>
+
+                </div>
+
+            </div>
+
+
+
+            <div id="page-guestbook" class="page">
+
+                <div class="gb-container">
+
+                    <span class="gb-title">GUESTBOOK</span>
+
+                    <div class="gb-input-box">
+
+                        <div class="gb-input-row">
+
+                            <input type="text" id="gb-nickname-field" class="gb-input" placeholder="성함" maxlength="5">
+
+                            <input type="text" id="gb-input-field" class="gb-input" placeholder="방명록을 남겨주세요.(최대 50자)" maxlength="50">
+
+                        </div>
+
+                        <button class="gb-submit" onclick="showModal('submit')">전송</button>
+
+                    </div>
+
+                    <div id="gb-list-container" class="gb-list"></div>
+
+                    <div id="pagination" class="pagination"></div>
+
+                    <button class="main-btn" style="margin-top: 12px; width: 100%; padding: 16px; font-size:1.05rem;" onclick="resetTest()">다시하기</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="custom-modal">
+
+        <div class="modal-content">
+
+            <span id="modal-msg" class="modal-text">방명록을<br>등록하시겠습니까?</span>
+
+            <div class="modal-btn-group">
+
+                <button id="modal-cancel-btn" class="modal-btn cancel" onclick="closeModal()">취소</button>
+
+                <button id="modal-confirm-btn" class="modal-btn confirm" onclick="confirmSubmit()">확인</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+        import { getFirestore, doc, updateDoc, increment, getDoc, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+
+        // --- 상시 전시용 화면 꺼짐 방지(Wake Lock) 시스템 ---
+
+        let wakeLock = null;
+
+        const requestWakeLock = async () => {
+
+            try {
+
+                if ('wakeLock' in navigator) {
+
+                    wakeLock = await navigator.wakeLock.request('screen');
+
+                    console.log('✅ 화면 꺼짐 방지가 활성화되었습니다.');
+
+                }
+
+            } catch (err) {
+
+                console.error(`Wake Lock Error: ${err.name}, ${err.message}`);
+
+            }
+
+        };
+
+        requestWakeLock();
+
+        document.addEventListener('visibilitychange', async () => {
+
+            if (wakeLock !== null && document.visibilityState === 'visible') {
+
+                requestWakeLock();
+
+            }
+
+        });
+
+
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyDdSXJJ2grh1GNA_vusNJRm9djRpRH1ggo",
+
+            authDomain: "hype-4bb91.firebaseapp.com",
+
+            projectId: "hype-4bb91",
+
+            storageBucket: "hype-4bb91.firebasestorage.app",
+
+            messagingSenderId: "165143291283",
+
+            appId: "1:165143291283:web:000e48b6091aa0a1c5b466",
+
+            measurementId: "G-0Q8QJ5YDP4"
+
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        const db = getFirestore(app);
+
+        
+
+        let userAnswers = { a: 0, b: 0, c: 0 };
+
+        let answerHistory = [];
+
+        let isProcessing = false;
+
+        let currentResultHead = ""; 
+
+        let allGuestMessages = [];
+
+        let currentPage = 1;
+
+        let currentModalMode = ""; 
+
+        const itemsPerPage = 10;
+
+
+
+        window.nextPage = function(pId) {
+
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+            const target = document.getElementById('page-' + pId);
+
+            if(target) {
+
+                target.classList.add('active');
+
+            }
+
+            isProcessing = false;
+
+        };
+
+
+
+        window.resetTest = function() {
+
+            const videoEl = document.getElementById('loading-video');
+
+            if(videoEl) {
+
+                videoEl.pause();
+
+                videoEl.src = "";
+
+                videoEl.load();
+
+            }
+
+            userAnswers = { a: 0, b: 0, c: 0 };
+
+            answerHistory = [];
+
+            currentResultHead = ""; 
+
+            currentPage = 1;
+
+            document.querySelectorAll('.opt-btn').forEach(btn => btn.disabled = false);
+
+            document.querySelectorAll('.btn-fill').forEach(f => f.style.width = "0%");
+
+            document.querySelectorAll('.stat-text').forEach(t => t.innerText = "");
+
+            document.getElementById('gb-nickname-field').value = "";
+
+            document.getElementById('gb-input-field').value = "";
+
+            renderGuestbook();
+
+            nextPage('start');
+
+        };
+
+
+
+        window.showModal = function(mode) {
+
+            currentModalMode = mode;
+
+            const nickname = document.getElementById('gb-nickname-field').value.trim();
+
+            const msg = document.getElementById('gb-input-field').value.trim();
+
+            const modalMsg = document.getElementById('modal-msg');
+
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+
+
+
+            if(mode === 'submit') {
+
+                if(!nickname || !msg) {
+
+                    modalMsg.innerHTML = "성함과 메시지를<br>모두 입력해주세요.";
+
+                    cancelBtn.style.display = "none";
+
+                    currentModalMode = "alert";
+
+                } else {
+
+                    modalMsg.innerHTML = "방명록을<br>등록하시겠습니까?";
+
+                    cancelBtn.style.display = "inline-block";
+
+                }
+
+            }
+
+            document.getElementById('custom-modal').style.display = 'flex';
+
+        };
+
+
+
+        window.closeModal = function() { document.getElementById('custom-modal').style.display = 'none'; };
+
+
+
+        window.confirmSubmit = async function() {
+
+            if(currentModalMode === "alert") {
+
+                closeModal();
+
+                return;
+
+            }
+
+            closeModal();
+
+            const nickInput = document.getElementById('gb-nickname-field');
+
+            const msgInput = document.getElementById('gb-input-field');
+
+            const nickname = nickInput.value.trim();
+
+            const msg = msgInput.value.trim();
+
+            try {
+
+                await addDoc(collection(db, "guestbook"), {
+
+                    headImg: currentResultHead, 
+
+                    nickname: nickname,
+
+                    message: msg,
+
+                    timestamp: serverTimestamp()
+
+                });
+
+                nickInput.value = "";
+
+                msgInput.value = "";
+
+            } catch(e) { console.error(e); }
+
+        };
+
+
+
+        const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"));
+
+        onSnapshot(q, (snap) => {
+
+            allGuestMessages = [];
+
+            snap.forEach((doc) => { allGuestMessages.push(doc.data()); });
+
+            renderGuestbook();
+
+        }, (error) => {
+
+            console.error("Firestore Snapshot 에러 케어:", error);
+
+        });
+
+
+
+        function renderGuestbook() {
+
+            const container = document.getElementById('gb-list-container');
+
+            const paginationContainer = document.getElementById('pagination');
+
+            if(!container || !paginationContainer) return;
+
+            container.innerHTML = ""; paginationContainer.innerHTML = "";
+
+            
+
+            const totalItems = allGuestMessages.length;
+
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+
+            const currentData = allGuestMessages.slice(startIndex, startIndex + itemsPerPage);
+
+            
+
+            currentData.forEach((data, index) => {
+
+                const dateObj = data.timestamp ? data.timestamp.toDate() : new Date();
+
+                const timeStr = `${dateObj.getMonth()+1}/${dateObj.getDate()} ${dateObj.getHours()}:${String(dateObj.getMinutes()).padStart(2,'0')}`;
+
+                const item = document.createElement('div');
+
+                item.className = 'gb-item';
+
+                item.style.animationDelay = `${index * 0.08}s`;
+
+                let headImg = data.headImg || "head1.png"; 
+
+                let nickname = data.nickname || "익명";
+
+                item.innerHTML = `
+
+                    <div class="gb-head-wrap"><img src="${headImg}" class="gb-head-img"></div>
+
+                    <div class="gb-divider"></div>
+
+                    <div class="gb-content-wrap">
+
+                        <span class="gb-msg">${data.message}</span>
+
+                        <div class="gb-info-row">
+
+                            <span class="gb-time">${timeStr}</span>
+
+                            <span class="gb-nick">| ${nickname}</span>
+
+                        </div>
+
+                    </div>`;
+
+                container.appendChild(item);
+
+            });
+
+            
+
+            if (totalPages > 1) {
+
+                const prevBtn = document.createElement('button');
+
+                prevBtn.className = 'pg-btn'; prevBtn.innerText = '<';
+
+                prevBtn.disabled = currentPage === 1;
+
+                prevBtn.onclick = () => { currentPage--; renderGuestbook(); };
+
+                paginationContainer.appendChild(prevBtn);
+
+                
+
+                // [검증 완료] 연타 시 오작동하지 않도록 내부 루프 격리 빌드 고정
+
+                for (let i = 1; i <= totalPages; i++) {
+
+                    const btn = document.createElement('button');
+
+                    btn.className = `pg-btn ${i === currentPage ? 'active' : ''}`;
+
+                    btn.innerText = i;
+
+                    btn.onclick = () => { currentPage = i; renderGuestbook(); };
+
+                    paginationContainer.appendChild(btn);
+
+                }
+
+                
+
+                const nextBtn = document.createElement('button');
+
+                nextBtn.className = 'pg-btn'; nextBtn.innerText = '>';
+
+                nextBtn.disabled = currentPage === totalPages;
+
+                nextBtn.onclick = () => { currentPage++; renderGuestbook(); };
+
+                paginationContainer.appendChild(nextBtn);
+
+            }
+
+        }
+
+
+
+        window.handleSelect = async function(qId, optId) {
+
+            if (isProcessing) return;
+
+            isProcessing = true;
+
+            const currentButtons = document.querySelectorAll(`#page-${qId} .opt-btn`);
+
+            currentButtons.forEach(btn => btn.disabled = true);
+
+            userAnswers[optId]++;
+
+            answerHistory.push(optId); 
+
+            const statsRef = doc(db, "surveyStats", qId);
+
+            try {
+
+                await updateDoc(statsRef, { [optId.toUpperCase()]: increment(1) });
+
+                const snap = await getDoc(statsRef);
+
+                if (snap.exists()) {
+
+                    const data = snap.data();
+
+                    const total = (data.A||0)+(data.B||0)+(data.C||0);
+
+                    ['a','b','c'].forEach(o => {
+
+                        const count = data[o.toUpperCase()] || 0;
+
+                        const p = total > 0 ? Math.round((count/total)*100) : 0;
+
+                        const fillBar = document.getElementById(`bar-${qId}-${o}`);
+
+                        if(fillBar) fillBar.style.width = p + "%";
+
+                        const textSpan = document.getElementById(`text-${qId}-${o}`);
+
+                        if(textSpan) textSpan.innerText = p + "%";
+
+                    });
+
+                }
+
+                setTimeout(() => {
+
+                    if (qId === 'q1') nextPage('q2');
+
+                    else if (qId === 'q2') nextPage('q3');
+
+                    else if (qId === 'q3') nextPage('q4');
+
+                    else if (qId === 'q4') startVideoSequence();
+
+                }, 1000);
+
+            } catch (e) { console.error(e); isProcessing = false; }
+
+        };
+
+
+
+        async function startVideoSequence() {
+
+            const { a, b, c } = userAnswers;
+
+            const maxVal = Math.max(a, b, c);
+
+            const candidates = [];
+
+            if (a === maxVal) candidates.push('a');
+
+            if (b === maxVal) candidates.push('b');
+
+            if (c === maxVal) candidates.push('c');
+
+            let finalType = (candidates.length === 1) ? candidates[0] : answerHistory.slice().reverse().find(ans => candidates.includes(ans));
+
+            nextPage('video'); 
+
+            const videoEl = document.getElementById('loading-video');
+
+            if(!videoEl) return;
+
+            if (finalType === 'a') videoEl.src = "Video Project 1.mp4";
+
+            else if (finalType === 'b') videoEl.src = "Video Project 2.mp4";
+
+            else videoEl.src = "Video Project 3.mp4";
+
+            videoEl.load();
+
+            const playPromise = videoEl.play();
+
+            if (playPromise !== undefined) {
+
+                playPromise.then(() => {}).catch(error => {
+
+                    console.log("자동재생 제한 예외 처리 차단:", error);
+
+                    calculateResult(); 
+
+                });
+
+            }
+
+            videoEl.onended = () => { 
+
+                videoEl.pause();
+
+                videoEl.src = "";
+
+                videoEl.load();
+
+                calculateResult(); 
+
+            };
+
+        }
+
+
+
+        async function calculateResult() {
+
+            const { a, b, c } = userAnswers;
+
+            const maxVal = Math.max(a, b, c);
+
+            const candidates = [];
+
+            if (a === maxVal) candidates.push('a');
+
+            if (b === maxVal) candidates.push('b');
+
+            if (c === maxVal) candidates.push('c');
+
+            let finalType = (candidates.length === 1) ? candidates[0] : answerHistory.slice().reverse().find(ans => candidates.includes(ans));
+
+            
+
+            const nameEl = document.getElementById('result-name');
+
+            const tagEl = document.getElementById('result-tag');
+
+            const descEl = document.getElementById('result-desc');
+
+            const cardEl = document.getElementById('result-card');
+
+
+
+            if (finalType === 'a') { 
+
+                nameEl.innerText = "KRU"; cardEl.src = "card1.png"; tagEl.innerText = "공감적 페르소나"; 
+
+                descEl.innerText = "함께 나누는 경험과 소속감에서 찾는 가치"; currentResultHead = "head1.png"; 
+
+            } else if (finalType === 'b') { 
+
+                nameEl.innerText = "MAX"; cardEl.src = "card2.png"; tagEl.innerText = "선구적 페르소나"; 
+
+                descEl.innerText = "남들보다 빠른 경험과 희소성에서 찾는 가치"; currentResultHead = "head2.png"; 
+
+            } else { 
+
+                nameEl.innerText = "HUGO"; cardEl.src = "card3.png"; tagEl.innerText = "주체적 페르소나"; 
+
+                descEl.innerText = "타인의 시선보다 나만의 확고한 기준에서 찾는 가치"; currentResultHead = "head3.png"; 
+
+            }
+
+
+
+            try {
+
+                const q1Snap = await getDoc(doc(db, "surveyStats", "q1"));
+
+                if (q1Snap.exists()) {
+
+                    const d = q1Snap.data();
+
+                    const total = (d.A||0)+(d.B||0)+(d.C||0);
+
+                    document.getElementById('total-participation-text').innerText = `현재 ${total}명이 참여했습니다`;
+
+                    ['A','B','C'].forEach(id => {
+
+                        const count = d[id] || 0;
+
+                        const p = total > 0 ? Math.round((count/total)*100) : 0;
+
+                        document.getElementById(`bar-total-${id.toLowerCase()}`).style.width = p+"%";
+
+                        document.getElementById(`percent-total-${id.toLowerCase()}`).innerText = p+"%";
+
+                    });
+
+                }
+
+            } catch(e) { console.error("결과 스탯 수신 에러 우회:", e); }
+
+            
+
+            nextPage('result');
+
+        }
+
+    </script>
+
+</body>
+
+</html>
